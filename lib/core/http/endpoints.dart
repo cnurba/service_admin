@@ -65,6 +65,7 @@ class _Branches {
 
 class _Products {
   String get products => "$_baseUrl/products";
+  String get branchProducts => "$_baseUrl/branchProducts";
 }
 
 class _Files {

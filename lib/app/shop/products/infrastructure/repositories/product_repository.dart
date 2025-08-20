@@ -83,4 +83,17 @@ class ProductRepository implements IProductRepository {
       throw Exception('Error fetching products: $e');
     }
   }
+
+  @override
+  Future<bool> postBranchProducts(List<String> ids) async {
+    try {
+      log("START BRANCH PRODUCT POST REQUEST");
+      await _dio.post(Endpoints.products.branchProducts, data: ids);
+      log("FINISH BRANCH PRODUCT POST ");
+      return true;
+    } catch (e) {
+      log("Error fetching objects: $e");
+      return false;
+    }
+  }
 }

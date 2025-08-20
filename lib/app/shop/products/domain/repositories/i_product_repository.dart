@@ -17,4 +17,5 @@ abstract class IProductRepository {
 
   /// Delete a product by id.
   Future<void> deleteProduct(String id);
+  Future<bool> postBranchProducts(List<String> ids);
 }

@@ -1,157 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:service_admin/app/shop/products/application/application/branch_product_add/branch_product_add_provider.dart';
+import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
 import 'package:service_admin/app/shop/products/application/application/product_future_provider.dart';
+import 'package:service_admin/app/shop/products/presentation/list/widgets/product_check_tile.dart';
+import 'package:service_admin/core/presentation/messenger/centered_snack.dart';
 
-class ProductListScreen extends ConsumerStatefulWidget {
+import '../../application/application/branch_product_add/branch_product_post_provider.dart';
+
+class ProductListScreen extends ConsumerWidget {
   const ProductListScreen({super.key});
 
-  @override
-  ConsumerState<ProductListScreen> createState() => _ProductListScreenState();
-}
+  void post(WidgetRef ref, BuildContext context) async {
+    /// post data using branchProductPostProvider - wich is a future povider
+    final List<String> ids = ref.read(branchProductAddProvider);
+    final result1 = await ref.read(branchProductPostProvider(ids).future);
+    if (result1) {
+      ref.read(branchProductAddProvider.notifier).clear();
+      showCenteredSnackWithAction(
+        context: context,
+        message: 'Товары успешно добавлены в ваш магазин',
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+      );
 
-class _ProductListScreenState extends ConsumerState<ProductListScreen> {
-  final Set<String> _selectedProducts = {}; // store selected IDs
-  String _searchQuery = "";
-  List<dynamic> _allProducts = []; // store all products here
+      ref.refresh(myProductFutureProvider);
+      return;
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final resultAsync = ref.watch(productFutureProvider);
-
     return Scaffold(
-      appBar: AppBar(title: const Text('Товары')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: const InputDecoration(
-                hintText: "Поиск товаров...",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value.toLowerCase();
-                });
-              },
-            ),
-          ),
-
-          Expanded(
-            child: resultAsync.when(
-              data: (products) {
-                _allProducts = products;
-                final filtered = products.where((p) {
-                  return p.name.toLowerCase().contains(
-                    _searchQuery.toLowerCase(),
-                  );
-                }).toList();
-
-                if (filtered.isEmpty) {
-                  return const Center(child: Text("Товары не найдены"));
-                }
-
-                return ListView.builder(
-                  itemCount: filtered.length,
-                  itemBuilder: (context, index) {
-                    final product = filtered[index];
-                    final isChecked = _selectedProducts.contains(product.id);
-
-                    return CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: isChecked,
-                      title: Text(product.name),
-                      subtitle: Text("ID: ${product.id}"),
-                      onChanged: (bool? checked) {
-                        setState(() {
-                          if (checked == true) {
-                            _selectedProducts.add(product.id);
-                          } else {
-                            _selectedProducts.remove(product.id);
-                          }
-                        });
-                      },
-                    );
-                  },
-                );
-              },
-              error: (error, stackTrace) =>
-                  Center(child: Text('Error: $error')),
-              loading: () => const Center(child: CircularProgressIndicator()),
-            ),
-          ),
-        ],
+      appBar: AppBar(title: Text("Товары")),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Visibility(
+        visible: ref.watch(branchProductAddProvider).isNotEmpty,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            post(ref, context);
+          },
+          label: const Text("Добавить"),
+          icon: Icon(Icons.check),
+        ),
       ),
-
-      bottomNavigationBar: _selectedProducts.isEmpty
-          ? const SizedBox.shrink() // hide if nothing selected
-          : Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Colors.grey.shade300)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, -2),
+      body: resultAsync.when(
+        data: (products) {
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return ProductCheckTile(
+                product: product,
+                isChecked: ref.watch(
+                  branchProductAddProvider.select(
+                    (state) => state.contains(product.id.toString()),
                   ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Selected: ${_selectedProducts.length}",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: _selectedProducts.map((id) {
-                        final product = _allProducts.firstWhereOrNull(
-                          (p) => "${p.id}-${_allProducts.indexOf(p)}" == id,
-                        );
-                        if (product == null) return const SizedBox();
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 6),
-                          child: Chip(
-                            label: Text(product.name),
-                            deleteIcon: const Icon(Icons.close),
-                            onDeleted: () {
-                              setState(() {
-                                _selectedProducts.remove(id);
-                              });
-                            },
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                "You selected ${_selectedProducts.length} products",
-              ),
-            ),
+                ),
+                onChanged: (bool? added) {
+                  ref
+                      .read(branchProductAddProvider.notifier)
+                      .addOrDelete(product.id.toString(), added ?? false);
+                },
+              );
+            },
           );
         },
-        child: const Icon(Icons.done),
+        error: (error, stackTrace) => Center(child: Text('Error: $error')),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
