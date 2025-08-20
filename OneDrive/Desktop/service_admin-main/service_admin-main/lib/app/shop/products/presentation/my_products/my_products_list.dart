@@ -45,6 +45,7 @@ class MyProductsList extends ConsumerWidget {
                     ),
                   ],
                 ),
+
                 child: ListTile(
                   title: Text(myproduct.name),
                   subtitle: Text('ID: ${myproduct.id}'),
