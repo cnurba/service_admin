@@ -12,16 +12,6 @@ class ProductRepository implements IProductRepository {
   ProductRepository(this._dio);
 
   @override
-  //   Future<ProductModel> getProductById(String id) async {
-  //     final response = await _dio.get(
-  //       Endpoints.myproducts.productsByProductId(id),
-  //     );
-  //     final dataList = response.data as List;
-  //     if (dataList.isEmpty) throw Exception('No product found with id $id');
-  //     return ProductDto.fromJson(dataList.first).toProduct(); // pick first
-  //   }
-  // }
-  @override
   Future<ProductModel> getProductById(String id) async {
     try {
       final responseData = await _dio.get(
@@ -52,12 +42,6 @@ class ProductRepository implements IProductRepository {
     throw UnimplementedError();
   }
 
-  // @override
-  // Future<List<ProductModel>> getAllProduct() async {
-  //   final response = await _dio.get(Endpoints.products.products);
-  //   final dataList = response.data as List;
-  //   return dataList.map((json) => ProductDto.fromJson(json).toProduct()).toList();
-  // }
   @override
   Future<List<ProductModel>> getAllProduct() async {
     try {
@@ -76,22 +60,6 @@ class ProductRepository implements IProductRepository {
     }
   }
 
-  // @override
-  // Future<ProductModel> getProductById(String id) async {
-  //   try {
-  //     final responseData = await _dio.get(
-  //       Endpoints.myproducts.productsByProductId(id),
-  //     );
-  //     if (responseData.statusCode == 200) {
-  //       return ProductDto.fromJson(responseData.data).toProduct();
-  //     } else {
-  //       throw Exception('Failed to load product with id: $id');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Error fetching product by id: $e');
-  //   }
-  // }
-
   @override
   Future<void> updateProduct(String id, product) {
     // TODO: implement updateProduct
@@ -99,8 +67,20 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<List<ProductModel>> getMyProduct() {
-    // TODO: implement getMyProduct
-    throw UnimplementedError();
+  Future<List<ProductModel>> getMyProducts() async {
+    try {
+      final responseData = await _dio.get(Endpoints.myproducts.myproducts);
+      if (responseData.statusCode == 200) {
+        final myProductsList = (responseData.data as List)
+            .map((myProducts) => ProductDto.fromJson(myProducts).toProduct())
+            .toList();
+        log("FINISH Products length  ${myProductsList.length}");
+        return myProductsList;
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
   }
 }

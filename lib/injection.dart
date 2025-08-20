@@ -5,9 +5,7 @@ import 'package:service_admin/app/shop/brands/domain/repositories/i_brand_reposi
 import 'package:service_admin/app/shop/brands/infrastructure/repositories/brand_repository.dart';
 import 'package:service_admin/app/shop/categories/domain/repositories/i_category_repository.dart';
 import 'package:service_admin/app/shop/categories/infrastructure/repositories/category_repository.dart';
-import 'package:service_admin/app/shop/products/domain/repositories/i_my_product_repository.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
-import 'package:service_admin/app/shop/products/infrastructure/repositories/my_product_repository.dart';
 import 'package:service_admin/app/shop/products/infrastructure/repositories/product_repository.dart';
 import 'package:service_admin/auth/domain/repositories/i_token_storage.dart';
 import 'package:service_admin/auth/infrastucture/repositories/auth_repository.dart';
@@ -45,9 +43,7 @@ void initDependencies() {
   getIt.registerLazySingleton<IProductRepository>(
     () => ProductRepository(getIt()),
   );
-  getIt.registerLazySingleton<IMyProductRepository>(
-    () => MyProductRepository(getIt()),
-  );
+ 
   // getIt.registerLazySingleton<IOrderToSupplierRepository>(() => OrderToSupplierRepository(getIt()));
   // getIt.registerLazySingleton<IClientRepository>(() => ClientRepository(getIt()));
 }

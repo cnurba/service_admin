@@ -4,7 +4,7 @@ abstract class IProductRepository {
   /// Get all products.
   Future<List<ProductModel>> getAllProduct();
 
-  Future<List<ProductModel>> getMyProduct();
+  Future<List<ProductModel>> getMyProducts();
 
   /// Get product by id.
   Future<ProductModel> getProductById(String productId);

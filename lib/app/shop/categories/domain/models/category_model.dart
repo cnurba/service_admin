@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-
+/// Represents a category in the shop.
+/// Contains properties such as id, name, description, imageUrl, isActive, and sortOrder.
+/// Provides methods to create an empty instance and to copy with modified properties.
 class CategoryModel extends Equatable {
   final String id;
   final String name;
@@ -16,6 +18,17 @@ class CategoryModel extends Equatable {
     required this.isActive,
      required this.sortOrder,
   });
+
+  factory CategoryModel.empty() {
+    return const CategoryModel(
+      id: '',
+      name: '',
+      description: '',
+      imageUrl: '',
+      isActive: false,
+      sortOrder: 0,
+    );
+  }
 
   /// Copy with method to create a new instance with modified properties.
   CategoryModel copyWith({
@@ -36,16 +49,6 @@ class CategoryModel extends Equatable {
     );
   }
 
-  factory CategoryModel.empty() {
-    return const CategoryModel(
-      id: '',
-      name: '',
-      description: '',
-      imageUrl: '',
-      isActive: false,
-      sortOrder: 0,
-    );
-  }
 
   @override
   List<Object?> get props => [

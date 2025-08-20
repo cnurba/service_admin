@@ -4,19 +4,23 @@ class ProductModel extends Equatable {
   final String id;
   final String name;
   final String description;
-  final String imageUrl;
-  final bool isActive;
-  final double price;
-  final String unit;
+  final String categoryId;
+  final String categoryName;
+  final String brandId;
+  final String brandName;
+  final String branchId;
+  final String branchName;
 
   const ProductModel({
     required this.id,
     required this.name,
     required this.description,
-    required this.imageUrl,
-    required this.isActive,
-    required this.price,
-    required this.unit,
+    required this.categoryId,
+    required this.categoryName,
+    required this.brandId,
+    required this.brandName,
+    required this.branchId,
+    required this.branchName,
   });
 
   @override
@@ -24,9 +28,11 @@ class ProductModel extends Equatable {
     id,
     name,
     description,
-    imageUrl,
-    isActive,
-    price,
-    unit,
+    categoryId,
+    categoryName,
+    branchId,
+    brandName,
+    branchId,
+    brandName,
   ];
 }

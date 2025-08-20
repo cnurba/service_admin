@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:service_admin/app/shop/products/application/my_product_future_provider.dart';
+import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
 import 'package:service_admin/app/shop/products/presentation/list/product_list_screen.dart';
 
 // Import your detail screen with alias to avoid confusion

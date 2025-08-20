@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/products/application/products_by_product_id_provider.dart';
+import 'package:service_admin/app/shop/products/application/application/product_by_product_id_provider.dart';
 
 class ProductDetailScreen extends ConsumerWidget {
   final String productId;
@@ -32,9 +32,9 @@ class ProductDetailScreen extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Text(product.description),
                 const SizedBox(height: 8),
-                Text("Price: \$${product.price}"),
+                //Text("Price: \$${product.price}"),
                 // Text("Stock: ${product.stock}"),
-                Text("Unit: ${product.unit}"),
+               // Text("Unit: ${product.unit}"),
               ],
             ),
           );

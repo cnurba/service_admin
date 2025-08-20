@@ -79,10 +79,12 @@ class ProductDto extends Equatable {
       id: id,
       name: name,
       description: description,
-      imageUrl: imageUrls.isNotEmpty ? imageUrls.first : '',
-      isActive: isActive,
-      unit: unit,
-      price: price,
+      categoryId: categoryId,
+      categoryName: categoryName,
+      brandId: brandId,
+      brandName: brandName,
+      branchId: branchId,
+      branchName: branchName,
     );
   }
 
