@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:service_admin/app/shop/products/domain/models/new/new_product_model.dart';
 import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
 import 'package:service_admin/app/shop/products/infrastructure/dtos/product_dto.dart';
@@ -94,6 +95,22 @@ class ProductRepository implements IProductRepository {
     } catch (e) {
       log("Error fetching objects: $e");
       return false;
+    }
+  }
+
+  @override
+  Future<String> createProduct(NewProductModel product) async {
+    try {
+      log("START PRODUCT POST REQUEST");
+     final result = await _dio.post(
+        Endpoints.products.branchProducts,
+        data: product.toJson(),
+      );
+      log("FINISH PRODUCT POST ");
+      return result.data['id'];
+    } catch (e) {
+      log("Error fetching objects: $e");
+      return "";
     }
   }
 }

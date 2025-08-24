@@ -47,6 +47,8 @@ class CategoryDto extends Equatable {
     );
   }
 
+  /// Create a DTO from a Category mode
+
  factory CategoryDto.fromCategory(CategoryModel category) {
     return CategoryDto(
       id: category.id,

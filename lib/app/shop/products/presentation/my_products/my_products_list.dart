@@ -2,28 +2,40 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:service_admin/app/products/products_screen.dart';
 import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
 import 'package:service_admin/app/shop/products/presentation/list/product_list_screen.dart';
+import 'package:service_admin/app/shop/products/presentation/my_products/new/new_product_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/product_detail_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/widgets/product_tile.dart';
+import 'package:service_admin/core/extansions/router_extension.dart';
 import 'package:service_admin/core/presentation/slidable/app_slidable.dart';
+import 'package:service_admin/core/presentation/slidable/expandable_fab.dart';
 
 class MyProductsList extends ConsumerWidget {
   const MyProductsList({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final resultAsync = ref.watch(myProductFutureProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Мои Товары')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const ProductListScreen(), // ✅ works now
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: ExpandableFab(
+        distance: 60,
+        children: [
+          ActionFab(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              context.push(NewProductScreen());
+            },
+          ),
+          ActionFab(
+            icon: const Icon(Icons.edit_attributes),
+            onPressed: () {
+              context.push(ProductListScreen());
+            },
+          ),
+        ],
       ),
       body: resultAsync.when(
         data: (myProducts) {
@@ -56,7 +68,6 @@ class MyProductsList extends ConsumerWidget {
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
         loading: () => const Center(child: CircularProgressIndicator()),
       ),
-
     );
   }
 }

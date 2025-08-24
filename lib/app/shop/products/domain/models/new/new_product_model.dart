@@ -1,14 +1,18 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:service_admin/app/shop/brands/domain/models/brand_model.dart';
+import 'package:service_admin/app/shop/brands/infrastructure/dtos/brand_dto.dart';
 import 'package:service_admin/app/shop/categories/domain/models/category_model.dart';
+import 'package:service_admin/app/shop/categories/infrastructure/dtos/category_dto.dart';
 
-class NewProductModel extends Equatable{
+class NewProductModel extends Equatable {
   final String id;
   final String name;
   final String description;
   final CategoryModel category;
   final BrandModel brand;
   final String unit;
+  final String sku; // артикул / SKU
   final bool isActive;
   final bool isFeatured;
   final bool hasAttributes;
@@ -20,6 +24,7 @@ class NewProductModel extends Equatable{
     required this.category,
     required this.brand,
     required this.unit,
+    required this.sku,
     required this.isActive,
     required this.isFeatured,
     required this.hasAttributes,
@@ -33,19 +38,37 @@ class NewProductModel extends Equatable{
       category: CategoryModel.empty(),
       brand: BrandModel.empty(),
       unit: '',
+      sku: '',
       isActive: true,
       isFeatured: false,
       hasAttributes: false,
     );
   }
 
-  copyWith({
+  /// to json
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'category': CategoryDto.fromCategory(category).toJson(),
+      'brand': BrandDto.fromBrand(brand).toJson(),
+      'unit': unit,
+      'sku': sku,
+      'is_active': isActive,
+      'is_featured': isFeatured,
+      'has_attributes': hasAttributes,
+    };
+  }
+
+  NewProductModel copyWith({
     String? id,
     String? name,
     String? description,
     CategoryModel? category,
     BrandModel? brand,
     String? unit,
+    String? sku,
     bool? isActive,
     bool? isFeatured,
     bool? hasAttributes,
@@ -57,6 +80,7 @@ class NewProductModel extends Equatable{
       category: category ?? this.category,
       brand: brand ?? this.brand,
       unit: unit ?? this.unit,
+      sku: sku ?? this.sku,
       isActive: isActive ?? this.isActive,
       isFeatured: isFeatured ?? this.isFeatured,
       hasAttributes: hasAttributes ?? this.hasAttributes,
@@ -64,8 +88,16 @@ class NewProductModel extends Equatable{
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-
+  List<Object?> get props => [
+    id,
+    name,
+    description,
+    category,
+    brand,
+    unit,
+    sku,
+    isActive,
+    isFeatured,
+    hasAttributes,
+  ];
 }

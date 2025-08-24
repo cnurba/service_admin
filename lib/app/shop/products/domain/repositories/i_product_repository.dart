@@ -1,3 +1,4 @@
+import 'package:service_admin/app/shop/products/domain/models/new/new_product_model.dart';
 import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 
 abstract class IProductRepository {
@@ -11,6 +12,9 @@ abstract class IProductRepository {
 
   /// Add a new product.
   Future<void> addProduct(ProductModel product);
+
+
+  Future<String> createProduct(NewProductModel product);
 
   /// Update an existing product.
   Future<void> updateProduct(String id, ProductModel product);
