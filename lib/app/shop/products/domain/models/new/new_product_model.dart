@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:service_admin/app/shop/brands/domain/models/brand_model.dart';
 import 'package:service_admin/app/shop/brands/infrastructure/dtos/brand_dto.dart';
 import 'package:service_admin/app/shop/categories/domain/models/category_model.dart';
 import 'package:service_admin/app/shop/categories/infrastructure/dtos/category_dto.dart';
+import 'package:service_admin/app/shop/units/domain/unit_model.dart';
 
-class NewProductModel extends Equatable {
+class NewProductModel extends Equatable{
   final String id;
   final String name;
   final String description;
   final CategoryModel category;
   final BrandModel brand;
-  final String unit;
-  final String sku; // артикул / SKU
+  final UnitModel unit;
+  final String sku;
   final bool isActive;
   final bool isFeatured;
   final bool hasAttributes;
@@ -37,7 +37,7 @@ class NewProductModel extends Equatable {
       description: '',
       category: CategoryModel.empty(),
       brand: BrandModel.empty(),
-      unit: '',
+      unit: UnitModel.empty(),
       sku: '',
       isActive: true,
       isFeatured: false,
@@ -53,7 +53,7 @@ class NewProductModel extends Equatable {
       'description': description,
       'category': CategoryDto.fromCategory(category).toJson(),
       'brand': BrandDto.fromBrand(brand).toJson(),
-      'unit': unit,
+      'unit': unit.toJson(unit),
       'sku': sku,
       'is_active': isActive,
       'is_featured': isFeatured,
@@ -67,7 +67,7 @@ class NewProductModel extends Equatable {
     String? description,
     CategoryModel? category,
     BrandModel? brand,
-    String? unit,
+    UnitModel? unit,
     String? sku,
     bool? isActive,
     bool? isFeatured,

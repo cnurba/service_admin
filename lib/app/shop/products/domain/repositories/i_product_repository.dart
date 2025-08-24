@@ -16,6 +16,8 @@ abstract class IProductRepository {
 
   Future<String> createProduct(NewProductModel product);
 
+  Future<List<String>> getProductImagesById(String uuid);
+
   /// Update an existing product.
   Future<void> updateProduct(String id, ProductModel product);
 

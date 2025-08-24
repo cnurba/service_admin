@@ -102,8 +102,8 @@ class ProductRepository implements IProductRepository {
   Future<String> createProduct(NewProductModel product) async {
     try {
       log("START PRODUCT POST REQUEST");
-     final result = await _dio.post(
-        Endpoints.products.branchProducts,
+      final result = await _dio.post(
+        Endpoints.products.products,
         data: product.toJson(),
       );
       log("FINISH PRODUCT POST ");
@@ -112,5 +112,10 @@ class ProductRepository implements IProductRepository {
       log("Error fetching objects: $e");
       return "";
     }
+  }
+
+  @override
+  Future<List<String>> getProductImagesById(String uuid) async {
+    throw UnimplementedError();
   }
 }

@@ -19,6 +19,7 @@ class DioInterceptor extends Interceptor {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
     options.headers.addAll(headers);
 
+
     if (!options.path.contains('GetToken')) {
       final token = await _authRepository.getSignedToken();
       if (token != null && token.isNotEmpty) {

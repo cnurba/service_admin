@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/brands/presentation/select/brand_select_text_field.dart';
-import 'package:service_admin/app/shop/categories/presentation/select/category_select_text_field.dart';
 import 'package:service_admin/app/shop/products/application/application/new_product_provider/new_product_controller.dart';
 import 'package:service_admin/app/shop/products/application/application/new_product_provider/new_product_provider.dart';
-import 'package:service_admin/app/shop/products/application/application/new_product_provider/new_product_state.dart';
-import 'package:service_admin/app/shop/products/presentation/my_products/new/widgets/product_field.dart';
+import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_attribute_page.dart';
+import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_images_page.dart';
+import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_page.dart';
 import 'package:service_admin/core/enums/state_type.dart';
 
 class NewProductScreen extends ConsumerStatefulWidget {
@@ -17,16 +16,6 @@ class NewProductScreen extends ConsumerStatefulWidget {
 
 class _NewProductScreenState extends ConsumerState<NewProductScreen> {
   final _pageController = PageController();
-  final _formKey = GlobalKey<FormState>();
-
-  // Простейший список единиц измерения.
-  static const List<String> _units = [
-    "шт",
-    "кг",
-    "л",
-    "м",
-    "упаковка",
-  ]; // можно расширить
 
   int get _pageCount {
     final hasAttrs = ref.watch(newProductProvider).newProduct.hasAttributes;
@@ -77,14 +66,13 @@ class _NewProductScreenState extends ConsumerState<NewProductScreen> {
       }
     });
 
-    if (newProductState.stateType==StateType.success) {
+    if (newProductState.stateType == StateType.success) {
       // Успешно сохранено, выходим
       WidgetsBinding.instance.addPostFrameCallback((_) {
-         _goNext();
+        _goNext();
         // true - чтобы обновить список
       });
     }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Новый товар'),
@@ -104,111 +92,19 @@ class _NewProductScreenState extends ConsumerState<NewProductScreen> {
               physics: const NeverScrollableScrollPhysics(),
               // управляем кнопками
               children: [
-                _buildFormPage(context, newProductState, controller, _formKey),
-                _buildImagesPage(),
-                if (_pageCount == 3) _buildAttributesPage(),
+                NewProductPage(),
+                NewProductImagesPage(),
+                if (_pageCount == 3) NewProductAttributeScreen(),
               ],
             ),
           ),
-          _buildNavigationBar(_formKey, controller),
+          //_buildNavigationBar(),
         ],
       ),
     );
   }
 
-  Widget _buildFormPage(
-    BuildContext context,
-    NewProductState newProductState,
-    NewProductController controller,
-    GlobalKey<FormState> formKey,
-  ) {
-    final product = newProductState.newProduct;
-    return Form(
-      key: formKey,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ProductField(
-              title: 'Название',
-              initialValue: product.name,
-              onChanged: controller.setName,
-            ),
-
-            ProductField(
-              title: 'Описание',
-              initialValue: product.name,
-              onChanged: controller.setName,
-            ),
-
-            ProductField(
-              title: 'SKU / Артикул',
-              initialValue: product.name,
-              onChanged: controller.setName,
-            ),
-            // Dropdown единиц
-            DropdownButtonFormField<String>(
-              value: product.unit.isEmpty ? null : product.unit,
-              decoration: const InputDecoration(labelText: 'Единица измерения'),
-              items: _units
-                  .map(
-                    (u) => DropdownMenuItem<String>(value: u, child: Text(u)),
-                  )
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) controller.setUnit(v);
-              },
-            ),
-
-            CategorySelectTextField(
-              initialValue: product.category.name,
-              onSelected: (category) {
-                controller.setCategory(category);
-              },
-            ),
-
-            BrandSelectTextField(
-              initialValue: product.brand.name,
-              onSelected: (brand) {
-                controller.setBrand(brand);
-              },
-            ),
-
-            const SizedBox(height: 16),
-            SwitchListTile(
-              title: const Text('Активен'),
-              value: product.isActive,
-              onChanged: controller.setIsActive,
-            ),
-            SwitchListTile(
-              title: const Text('Есть атрибуты'),
-              value: product.hasAttributes,
-              onChanged: controller.setHasAttributes,
-            ),
-            SwitchListTile(
-              title: const Text('Избранный'),
-              value: product.isFeatured,
-              onChanged: controller.setIsFeatured,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildImagesPage() {
-    return const Center(child: Text('Страница изображений (пока пусто)'));
-  }
-
-  Widget _buildAttributesPage() {
-    return const Center(child: Text('Страница атрибутов (пока пусто)'));
-  }
-
-  Widget _buildNavigationBar(
-    GlobalKey<FormState> formKey,
-    NewProductController controller,
-  ) {
+  Widget _buildNavigationBar() {
     final idx = _pageController.hasClients
         ? _pageController.page?.round() ?? 0
         : 0;
@@ -228,10 +124,10 @@ class _NewProductScreenState extends ConsumerState<NewProductScreen> {
                     case 0:
                       {
                         // Validate form
-                        if (formKey.currentState?.validate() ?? false) {
-                          controller.post();
-                          //_goNext();
-                        }
+                        // if (formKey.currentState?.validate() ?? false) {
+                        //controller.post();
+                        _goNext();
+                        //  }
                       }
                     case 1:
                       _goNext;

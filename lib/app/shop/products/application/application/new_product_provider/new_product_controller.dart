@@ -3,6 +3,7 @@ import 'package:service_admin/app/shop/brands/domain/models/brand_model.dart';
 import 'package:service_admin/app/shop/categories/domain/models/category_model.dart';
 import 'package:service_admin/app/shop/products/application/application/new_product_provider/new_product_state.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
+import 'package:service_admin/app/shop/units/domain/unit_model.dart';
 import 'package:service_admin/core/enums/state_type.dart';
 
 class NewProductController extends StateNotifier<NewProductState> {
@@ -34,7 +35,7 @@ class NewProductController extends StateNotifier<NewProductState> {
     state = state.copyWith(newProduct: state.newProduct.copyWith(sku: sku));
   }
 
-  void setUnit(String unit) {
+  void setUnit(UnitModel unit) {
     state = state.copyWith(newProduct: state.newProduct.copyWith(unit: unit));
   }
 
