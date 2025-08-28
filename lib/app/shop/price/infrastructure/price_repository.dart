@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:service_admin/app/shop/price/domain/model/price_model.dart';
 import 'package:service_admin/app/shop/price/domain/model/price_type_model.dart';
@@ -17,12 +19,20 @@ class PriceRepository implements IPriceRepository {
 
   @override
   Future<List<PriceModel>> getPricesByType(String priceTypeUuid) async {
-    final response = await _dio.get(
-      "/prices",
-      queryParameters: {"priceTypeUuid": priceTypeUuid},
-    );
-    return (response.data as List)
-        .map((json) => PriceModel.fromJson(json))
-        .toList();
+
+    try {
+      final response = await _dio.get(
+        "/prices",
+        queryParameters: {"priceTypeUuid": priceTypeUuid},
+      );
+      return (response.data as List)
+          .map((json) => PriceModel.fromJson(json))
+          .toList();
+    } catch (e) {
+      log(e.toString());
+      throw Exception("priceTypeUuid must be a valid integer string");
+    }
+
+
   }
 }

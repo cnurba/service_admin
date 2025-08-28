@@ -44,8 +44,6 @@ dependencies:
   collection: ^1.17.0
   flutter_slidable: ^4.0.0
   flutter_expandable_fab: ^2.5.2
-  dependencies:
-  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

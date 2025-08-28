@@ -14,9 +14,3 @@ final priceTypesProvider = FutureProvider<List<PriceTypeModel>>((ref) async {
   return await ref.read(priceRepositoryProvider).getPriceTypes();
 });
 
-final pricesByTypeProvider = FutureProvider.family<List<PriceModel>, String>((
-  ref,
-  priceTypeUuid,
-) async {
-  return await ref.read(priceRepositoryProvider).getPricesByType(priceTypeUuid);
-});
