@@ -8,9 +8,7 @@ class UnitSelectableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Выберите ЕИ'),
-      ),
+      appBar: AppBar(title: const Text('Выберите ЕИ')),
       body: Consumer(
         builder: (context, ref, child) {
           final resultAsync = ref.watch(unitFutureProvider);

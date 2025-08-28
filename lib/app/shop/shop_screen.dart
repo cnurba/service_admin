@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:service_admin/app/shop/branches/presentation/list/branch_list_screen.dart';
 import 'package:service_admin/app/shop/brands/presentation/list/brand_list_screen.dart';
 import 'package:service_admin/app/shop/categories/presentation/list/category_list_screen.dart';
-import 'package:service_admin/app/shop/products/presentation/list/product_list_screen.dart';
+import 'package:service_admin/app/shop/price/presentation/price_list_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/my_products_list.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -65,6 +65,17 @@ class ShopScreen extends StatelessWidget {
               Navigator.of(
                 context,
               ).push(MaterialPageRoute(builder: (context) => MyProductsList()));
+            },
+          ),
+          SizedBox(height: 15),
+          ListTile(
+            title: const Text('Цены'),
+            subtitle: const Text('Description of Item 5'),
+            leading: const Icon(Icons.price_change),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PriceListScreen()),
+              );
             },
           ),
         ],

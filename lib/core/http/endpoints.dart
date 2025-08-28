@@ -79,6 +79,10 @@ class _Myproducts {
   }
 }
 
+class _PriceTypes {
+  String get priceType => "$_baseUrl/priceTypes";
+}
+
 /// Defines endpoints for connection to server.
 class Endpoints {
   static get client => _Clients();
@@ -93,6 +97,8 @@ class Endpoints {
   static get products => _Products();
 
   static get myproducts => _Myproducts();
+
+  static get priceType => _PriceTypes();
 
   static get auth => _Auth();
 
