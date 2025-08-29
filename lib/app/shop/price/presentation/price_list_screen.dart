@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/price/application/price/price_controller.dart';
 import 'package:service_admin/app/shop/price/application/set_price_provider/set_price_controller.dart';
 import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
-import 'package:service_admin/app/shop/price/presentation/price_filter_widget.dart';
+import 'package:service_admin/app/shop/price/presentation/widget/price_filter_widget.dart';
+import 'package:service_admin/app/shop/price/presentation/set_price_screen.dart';
 import 'package:service_admin/app/shop/price/presentation/widget/number_format.dart';
+import 'package:service_admin/core/extansions/router_extension.dart';
 
 class PriceListScreen extends ConsumerStatefulWidget {
   const PriceListScreen({super.key});
@@ -33,6 +35,7 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
             children: [
               PriceFilterWidget(
                 onPriceTypeSelected: (priceTypeUuid) {
+                  ref.read(setPriceProvider.notifier).setPriceTypeUuid(priceTypeUuid);
                   ref.read(priceProvider.notifier).loadPrices(priceTypeUuid);
                 },
               ),
@@ -45,11 +48,7 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
                     selected: ref
                         .watch(setPriceProvider)
                         .items
-                        .any(
-                          (e) =>
-                              e.productUuid == item.productUuid &&
-                              e.productPropertyUuid == item.productUuid,
-                        ),
+                        .any((e) => e.priceModel == item),
 
                     title: Text(prices[index].productName),
 
@@ -82,11 +81,7 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
                             ref
                                 .read(setPriceProvider.notifier)
                                 .setPriceItems(
-                                  SetPriceModel(
-                                    productUuid: item.productUuid,
-                                    productPropertyUuid: item.productUuid,
-                                    price: price,
-                                  ),
+                                  SetPriceModel(priceModel: item, price: price),
                                 );
                           }
                         },
@@ -104,10 +99,7 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
           final _newPrices = ref.watch(setPriceProvider);
           return FloatingActionButton.extended(
             onPressed: () {
-              ref.read(setPriceProvider.notifier).postPrices();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Новые цены отправлены ✅")),
-              );
+              context.push(SetPriceScreen());
             },
             label: Text(
               "Выбрано ${_newPrices.items.length} строк(а)\nУстановить новые цены",

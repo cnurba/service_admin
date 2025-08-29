@@ -3,6 +3,7 @@ import 'package:service_admin/app/shop/price/application/price_provider.dart';
 import 'package:service_admin/app/shop/price/application/set_price_provider/set_price_state.dart';
 import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
 import 'package:service_admin/app/shop/price/domain/repositories/i_price_repository.dart';
+import 'package:service_admin/core/enums/state_type.dart';
 
 final setPriceProvider =
     StateNotifierProvider<SetPriceController, SetPriceState>((ref) {
@@ -14,13 +15,25 @@ class SetPriceController extends StateNotifier<SetPriceState> {
 
   SetPriceController(this._api) : super(SetPriceState.initial());
 
+  void setPriceTypeUuid(String priceTypeUuid) {
+    state = state.copyWith(priceTypeUuid: priceTypeUuid);
+  }
+
+  void clear() {
+    state = SetPriceState.initial();
+  }
+
+  void deletePriceItem(SetPriceModel setPriceModel) {
+    final updatedList = state.items.where((item) => item != setPriceModel).toList();
+    state = state.copyWith(items: updatedList);
+  }
+
   void setPriceItems(SetPriceModel setPriceModel) async {
     /// add item to list
     /// if item already exists, update it
     final index = state.items.indexWhere(
       (item) =>
-          item.productUuid == setPriceModel.productUuid &&
-          item.productPropertyUuid == setPriceModel.productPropertyUuid,
+          item.priceModel == setPriceModel.priceModel,
     );
     if (index == -1) {
       state = state.copyWith(items: [...state.items, setPriceModel]);
@@ -33,7 +46,13 @@ class SetPriceController extends StateNotifier<SetPriceState> {
 
   void postPrices() async {
     if (state.items.isEmpty) return;
-    // await _api.setPrices(state.items);
+
+    state = state.copyWith(stateType: StateType.loading);
+    final bool result = await _api.setPrices(state);
+    await Future.delayed(const Duration(seconds: 2));
+    state = state.copyWith(
+      stateType: result ? StateType.success : StateType.error,
+    );
     state = state.copyWith(items: []);
   }
 }

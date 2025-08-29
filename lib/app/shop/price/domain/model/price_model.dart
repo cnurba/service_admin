@@ -5,7 +5,7 @@ class PriceModel {
   final String productPropertyUuid;
   final String unitName;
   final double stock;
-  final int oldPrice;
+  final double oldPrice;
 
   PriceModel({
     required this.productName,
@@ -25,7 +25,7 @@ class PriceModel {
       productPropertyUuid: json['productPropertyUuid'],
       unitName: json['unitName'],
       stock: (json['stock'] ?? 0).toDouble(),
-      oldPrice: (json['oldPrice'] ?? 0),
+      oldPrice: (json['oldPrice'] ?? 0).toDouble(),
     );
   }
 }

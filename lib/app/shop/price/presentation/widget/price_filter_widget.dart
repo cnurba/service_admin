@@ -16,6 +16,7 @@ class _PriceFilterWidgetState extends State<PriceFilterWidget> {
 
   String selectedPriceTypeUuid = '';
 
+
   @override
   Widget build(BuildContext context) {
     return Consumer(

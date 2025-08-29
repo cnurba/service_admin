@@ -11,11 +11,20 @@ final priceProvider = StateNotifierProvider<PriceController, List<PriceModel>>((
 
 class PriceController extends StateNotifier<List<PriceModel>> {
   final IPriceRepository _api;
+
   PriceController(this._api) : super([]);
 
   Future<void> loadPrices(String priceTypeUuid) async {
     final prices = await _api.getPricesByType(priceTypeUuid);
     state = prices;
+  }
+
+  Future<void> clearSetPrices(List<PriceModel> selectedPrices) async {
+    /// Remove selected prices from the state list
+    /// use [removeWhere] method
+    for (final selectedPrice in selectedPrices) {
+      state.removeWhere((item) => item == selectedPrice);
+    }
   }
 
   // Add your controller logic here

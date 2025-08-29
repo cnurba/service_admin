@@ -7,7 +7,6 @@ import 'package:service_admin/app/shop/products/presentation/my_products/my_prod
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

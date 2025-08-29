@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
 import 'package:service_admin/core/enums/state_type.dart';
 
+import '../../domain/model/price_model.dart';
+
 class SetPriceState extends Equatable {
   final String priceTypeUuid;
   final List<SetPriceModel> items;
@@ -20,6 +22,8 @@ class SetPriceState extends Equatable {
       stateType: StateType.initial,
     );
   }
+
+  List<PriceModel> get priceModels => items.map((e) => e.priceModel).toList();
 
   SetPriceState copyWith({
     String? priceTypeUuid,
