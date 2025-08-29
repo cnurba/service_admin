@@ -4,11 +4,10 @@ import 'package:service_admin/app/shop/price/application/set_price_provider/set_
 import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
 import 'package:service_admin/app/shop/price/domain/repositories/i_price_repository.dart';
 
-
 final setPriceProvider =
     StateNotifierProvider<SetPriceController, SetPriceState>((ref) {
-  return SetPriceController(ref.watch(priceRepositoryProvider));
-});
+      return SetPriceController(ref.watch(priceRepositoryProvider));
+    });
 
 class SetPriceController extends StateNotifier<SetPriceState> {
   final IPriceRepository _api;
@@ -33,8 +32,8 @@ class SetPriceController extends StateNotifier<SetPriceState> {
   }
 
   void postPrices() async {
-    if(state.items.isEmpty) return;
-    //await _api.setPrices(state.items);
+    if (state.items.isEmpty) return;
+    // await _api.setPrices(state.items);
     state = state.copyWith(items: []);
   }
 }
