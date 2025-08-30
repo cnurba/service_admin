@@ -46,4 +46,9 @@ class Attribute extends Equatable {
   }
   @override
   List<Object?> get props => [name, type, uuid];
+
+  @override
+  String toString() {
+    return 'Attribute{name: $name, type: $type, uuid: $uuid}';
+  }
 }

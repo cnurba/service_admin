@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:service_admin/app/shop/products/domain/models/attribute/attribute.dart';
+import 'package:service_admin/app/shop/products/domain/models/attribute/product_attribute.dart';
 import 'package:service_admin/app/shop/products/domain/models/new/new_product_model.dart';
 import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
@@ -117,5 +120,94 @@ class ProductRepository implements IProductRepository {
   @override
   Future<List<String>> getProductImagesById(String uuid) async {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> uploadProductImage(String productId, List<File> files) async {
+    try {
+      log("START UPLOAD PRODUCT IMAGES REQUEST");
+      final formData = FormData.fromMap({
+        'images': files
+            .map(
+              (file) => MultipartFile.fromFileSync(
+                file.path,
+                filename: file.path.split(Platform.pathSeparator).last,
+              ),
+            )
+            .toList(),
+      });
+      final responseData = await _dio.post(
+        Endpoints.files.fileProduct,
+        data: formData,
+        queryParameters: {'id': productId},
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'catalog': "Product",
+          },
+        ),
+      );
+      log("FINISH UPLOAD PRODUCT IMAGES ");
+      return !responseData.data['error'];
+    } catch (e) {
+      log("Error uploading images: $e");
+      return false;
+    }
+  }
+
+  @override
+  Future<List<Attribute>> getAttributes() async {
+    try {
+      final responseData = await _dio.get(Endpoints.products.attributes);
+      if (responseData.statusCode == 200) {
+        final attributes = (responseData.data as List)
+            .map((items) => Attribute.fromJson(items))
+            .toList();
+        log("FINISH Products length  ${attributes.length}");
+        return attributes;
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
+  }
+
+  @override
+  Future<bool> createAttribute(Map<String, dynamic> data) async {
+    try {
+      final responseData = await _dio.post(
+        Endpoints.products.attributes,
+        data: data,
+      );
+      if (responseData.statusCode == 200) {
+        return !responseData.data['error'];
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
+  }
+
+  @override
+  Future<List<ProductAttribute>> getProductAttributes(String productId) async {
+    try {
+      final responseData = await _dio.get(
+        Endpoints.products.productAttributes,
+        queryParameters: {'id': productId},
+      );
+      if (responseData.statusCode == 200) {
+        final attributes = (responseData.data as List)
+            .map((items) => ProductAttribute.fromJson(items))
+            .toList();
+        log("FINISH Products length  ${attributes.length}");
+        return attributes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
   }
 }

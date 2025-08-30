@@ -12,7 +12,6 @@ import 'package:service_admin/core/presentation/slidable/expandable_fab.dart';
 
 class MyProductsList extends ConsumerWidget {
   const MyProductsList({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final resultAsync = ref.watch(myProductFutureProvider);

@@ -4,8 +4,7 @@ import 'package:service_admin/app/shop/products/application/application/branch_p
 import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
 import 'package:service_admin/app/shop/products/application/application/product_future_provider.dart';
 import 'package:service_admin/app/shop/products/presentation/list/widgets/product_check_tile.dart';
-import 'package:service_admin/core/presentation/messenger/centered_snack.dart';
-
+import 'package:service_admin/core/extansions/router_extension.dart';
 import '../../application/application/branch_product_add/branch_product_post_provider.dart';
 
 class ProductListScreen extends ConsumerWidget {
@@ -17,15 +16,15 @@ class ProductListScreen extends ConsumerWidget {
     final result1 = await ref.read(branchProductPostProvider(ids).future);
     if (result1) {
       ref.read(branchProductAddProvider.notifier).clear();
-      showCenteredSnackWithAction(
-        context: context,
-        message: 'Товары успешно добавлены в ваш магазин',
-        onTap: () {
-          Navigator.of(context).pop();
-        },
-      );
-
       ref.refresh(myProductFutureProvider);
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Товары успешно добавлены')));
+
+      Future.microtask(() {
+        context.pop();
+      });
       return;
     }
   }
