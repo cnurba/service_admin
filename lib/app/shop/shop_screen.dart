@@ -4,6 +4,7 @@ import 'package:service_admin/app/shop/brands/presentation/list/brand_list_scree
 import 'package:service_admin/app/shop/categories/presentation/list/category_list_screen.dart';
 import 'package:service_admin/app/shop/price/presentation/price_list_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/my_products_list.dart';
+import 'package:service_admin/app/shop/stock/presentation/stock_list_screen.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -74,6 +75,18 @@ class ShopScreen extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => PriceListScreen()),
+              );
+            },
+          ),
+
+          SizedBox(height: 15),
+          ListTile(
+            title: const Text('Остатки'),
+            subtitle: const Text('Остатки'),
+            leading: const Icon(Icons.price_change),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => StockListScreen()),
               );
             },
           ),
