@@ -12,7 +12,12 @@ class StockModel {
     required this.price,
     required this.amount,
   });
-
-
-  // e.g. "Warehouse A"
+  factory StockModel.fromJson(Map<String, dynamic> json) {
+    return StockModel(
+      productModel: json['productModel'],
+      stock: (json['stock'] ?? 0).toDouble(),
+      price: json['price'],
+      amount: json['amount'],
+    );
+  }
 }

@@ -1,56 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/price/application/price/price_controller.dart';
-import 'package:service_admin/app/shop/price/application/set_price_provider/set_price_controller.dart';
-import 'package:service_admin/app/shop/price/application/set_price_provider/set_price_state.dart';
-import 'package:service_admin/app/shop/price/presentation/widget/set_price_tile.dart';
+import 'package:service_admin/app/shop/stock/application/set_stock_provider/set_stock_controller.dart';
 import 'package:service_admin/core/extansions/router_extension.dart';
-import 'package:service_admin/core/presentation/errors/state_wrapper.dart';
 
 class SetStockScreen extends ConsumerWidget {
   const SetStockScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SetPriceState state = ref.watch(setPriceProvider);
+    final stockState = ref.watch(setStockProvider);
+    final notifier = ref.read(setStockProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Set Stocks"),
-        leading: BackButton(
-          onPressed: () {
-            ref.read(setPriceProvider.notifier).clear();
-            context.pop();
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: StateWrapper(
-          onSuccess: () {
-            ref.read(priceProvider.notifier).clearSetPrices(state.priceModels);
-            context.pop();
-          },
-          stateType: state.stateType,
-          errorChild: Icon(Icons.error, color: Colors.red),
-          child: Text('Установить остатки'),
-        ),
-        icon: Icon(Icons.check),
-        onPressed: () {
-          // Post prices and clear the list
-          ref.read(setPriceProvider.notifier).postPrices();
-        },
+        leading: BackButton(onPressed: () => context.pop()),
       ),
       body: ListView.separated(
-        padding: EdgeInsets.all(8.0),
-        separatorBuilder: (context, index) => Divider(),
-        itemCount: state.items.length,
+        padding: const EdgeInsets.all(8.0),
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: stockState.items.length,
         itemBuilder: (context, index) {
-          final priceItem = state.items[index];
-          return SetPriceTile(
-            priceModel: priceItem.priceModel,
-            onDelete: () {
-              ref.read(setPriceProvider.notifier).deletePriceItem(priceItem);
-            },
+          final item = stockState.items[index];
+          return ListTile(
+            title: Text(item.stockModel.productModel.name),
+            subtitle: Text("Qty: ${item.price}, Stock: ${item.unit}"),
+            // trailing: IconButton(
+            //   icon: const Icon(Icons.delete, color: Colors.red),
+            //  // onPressed: () => notifier.deleteStockItem(item),
+            // ),
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.upload),
+        label: const Text('Отправить на сервер'),
+        onPressed: () async {
+         // await notifier.postStocks();
+          context.pop();
         },
       ),
     );

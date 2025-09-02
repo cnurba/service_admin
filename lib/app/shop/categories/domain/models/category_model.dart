@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:service_admin/core/http/server_address.dart';
 /// Represents a category in the shop.
 /// Contains properties such as id, name, description, imageUrl, isActive, and sortOrder.
 /// Provides methods to create an empty instance and to copy with modified properties.
@@ -18,6 +19,10 @@ class CategoryModel extends Equatable {
     required this.isActive,
      required this.sortOrder,
   });
+
+  String get imagePath {
+    return imageUrl.isNotEmpty ? "${ServerAddress().imageUrl}$imageUrl" : 'https://via.placeholder.com/150';
+  }
 
   factory CategoryModel.empty() {
     return const CategoryModel(

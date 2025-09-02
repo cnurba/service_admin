@@ -13,5 +13,5 @@ class ServerAddress {
   /// Base url for connection.
   //String get baseUrl => "$_address/$_apiVer";
   String get baseUrl => "$_address";
-
+  String get imageUrl => "https://metal.tez.kg/Photos/";
 }

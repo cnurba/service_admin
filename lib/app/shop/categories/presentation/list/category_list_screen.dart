@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/categories/application/category_future_provider.dart';
 import 'package:service_admin/app/shop/categories/application/category_image/image_future_provider.dart';
 import 'package:service_admin/app/shop/categories/presentation/new/category_new_screen.dart';
+import 'package:service_admin/core/http/server_address.dart';
 
 class CategoryListScreen extends ConsumerWidget {
   const CategoryListScreen({super.key});
@@ -52,9 +53,60 @@ class CategoryListScreen extends ConsumerWidget {
             itemCount: categories.length,
             itemBuilder: (context, index) {
               final category = categories[index];
-              return ListTile(
-                title: Text(category.name),
-                subtitle: Text('ID: ${category.id}'),
+              log(
+                "Loading image for category ${category.name}, URL: ${category.imageUrl}",
+              );
+              return Card(
+                margin: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16.0,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      category.imageUrl.isNotEmpty
+                          ? Image.network(
+                              category.imagePath,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                log(
+                                  "Image load error for ${category.imageUrl}: $error",
+                                );
+                                return const Icon(Icons.error, size: 50);
+                              },
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return const CircularProgressIndicator();
+                                  },
+                            )
+                          : const Icon(Icons.image_not_supported, size: 50),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              category.name,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'ID: ${category.id}, ${category.imageUrl}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           );

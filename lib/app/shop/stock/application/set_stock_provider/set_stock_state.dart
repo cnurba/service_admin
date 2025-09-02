@@ -1,13 +1,24 @@
-// import 'package:equatable/equatable.dart';
-// import 'package:service_admin/app/shop/stock/domain/models/set_stock_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:service_admin/app/shop/stock/domain/models/set_stock_model.dart';
+import 'package:service_admin/core/enums/state_type.dart';
 
-import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
+class SetStockState extends Equatable {
+  final List<SetStockModel> items;
+  final StateType stateType;
 
-// class SetStockState extends Equatable {
-//   final String type;
-//   final List<StockModel> items;
-//   final StateType stateType;
-//
-//   @override
-//   List<Object?> get props => throw UnimplementedError();
-// }
+  const SetStockState({required this.items, required this.stateType});
+
+  factory SetStockState.initial() {
+    return SetStockState(items: [], stateType: StateType.initial);
+  }
+
+  SetStockState copyWith({List<SetStockModel>? items, StateType? stateType}) {
+    return SetStockState(
+      items: items ?? this.items,
+      stateType: stateType ?? this.stateType,
+    );
+  }
+
+  @override
+  List<Object?> get props => [items, stateType];
+}

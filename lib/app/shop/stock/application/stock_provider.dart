@@ -7,7 +7,3 @@ import 'package:service_admin/injection.dart';
 final stockRepositoryProvider = Provider<IStockRepository>(
   (ref) => StockRepository(getIt<Dio>()),
 );
-
-// final priceTypesProvider = FutureProvider<List<PriceTypeModel>>((ref) async {
-//   return await ref.read(stockRepositoryProvider).getPriceTypes();
-// });
