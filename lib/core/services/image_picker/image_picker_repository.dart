@@ -7,6 +7,7 @@ import 'package:service_admin/core/services/image_picker/i_image_picker_reposito
 
 class ImagePickerRepository implements IImagePickerRepository {
   final Dio _dio;
+
   ImagePickerRepository(this._dio);
 
   @override
@@ -39,10 +40,7 @@ class ImagePickerRepository implements IImagePickerRepository {
 
       final result = await _dio.post(
         options: Options(
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'catalog': catalog,
-          },
+          headers: {'Content-Type': 'multipart/form-data', 'catalog': catalog},
         ),
         Endpoints.files.file,
         data: FormData.fromMap({
@@ -59,6 +57,23 @@ class ImagePickerRepository implements IImagePickerRepository {
     } catch (e) {
       log("Error uploading image: $e");
       return (null, "Failed to upload image");
+    }
+  }
+
+  @override
+  Future<File?> pickImageFromGalleryWithoutPost() async {
+    try {
+      // Create an instance of ImagePicker
+      final ImagePicker _picker = ImagePicker();
+      // Pick an image
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      // Convert XFile into File
+      File file = File(image!.path);
+
+      return file;
+    } catch (e) {
+      log("Error uploading image: $e");
+      return null;
     }
   }
 }

@@ -1,25 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:service_admin/app/shop/price/domain/model/price_model.dart';
+import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
 
 class SetStockModel extends Equatable {
-  final PriceModel priceModel;
+  final StockModel stockModel;
   final double price;
   final double unit;
 
   const SetStockModel({
-    required this.priceModel,
+    required this.stockModel,
     required this.price,
     required this.unit,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'productUuid': priceModel.productUuid,
-      'productPropertyUuid': priceModel.productPropertyUuid,
+      'productUuid': stockModel.stock,
+      'productPropertyUuid': stockModel.amount,
       'price': price,
     };
   }
 
   @override
-  List<Object?> get props => [priceModel, price];
+  List<Object?> get props => [stockModel, price];
 }

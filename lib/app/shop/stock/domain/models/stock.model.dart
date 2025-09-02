@@ -1,23 +1,23 @@
+import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
+
 class StockModel {
-  final String productName;
-
-  final String unitName;
+  final ProductModel productModel;
   final double stock;
-  final double oldPrice; // e.g. "Warehouse A"
+  final double price;
+  final double amount;
 
-  StockModel({
-    required this.productName,
-    required this.unitName,
+  const StockModel({
+    required this.productModel,
     required this.stock,
-    required this.oldPrice,
+    required this.price,
+    required this.amount,
   });
-
   factory StockModel.fromJson(Map<String, dynamic> json) {
     return StockModel(
-      productName: json['productName'],
-      unitName: json['unitName'],
+      productModel: json['productModel'],
       stock: (json['stock'] ?? 0).toDouble(),
-      oldPrice: (json['oldPrice'] ?? 0).toDouble(),
+      price: json['price'],
+      amount: json['amount'],
     );
   }
 }

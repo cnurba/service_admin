@@ -64,6 +64,9 @@ class NewProductController extends StateNotifier<NewProductState> {
     final res = await _api.createProduct(state.newProduct);
     if (res.isNotEmpty) {
       state = state.copyWith(stateType: StateType.success, newProductId: res);
+      Future.delayed(const Duration(seconds: 3), () {
+        state = state.copyWith(stateType: StateType.initial);
+      });
     } else {
       state = state.copyWith(stateType: StateType.error);
     }
