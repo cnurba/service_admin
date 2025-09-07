@@ -36,5 +36,5 @@ abstract class IProductRepository {
   Future<List<ProductAttribute>> getProductAttributes(String productId);
 
   ///Get product attribute
-  Future<FullProductModel> getFullProductById(String productId);
+  Future<FullProductModel> getProductDetailById(String productId);
 }

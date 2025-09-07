@@ -15,9 +15,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/products/domain/models/full_product_model.dart';
 import 'package:service_admin/app/shop/products/application/application/product_future_provider.dart';
 
-final productByProductIdFutureProvider = FutureProvider.autoDispose
+final productDetailFutureProvider = FutureProvider.autoDispose
     .family<FullProductModel, String>((ref, productId) async {
       final productRepository = ref.watch(productRepositoryProvider);
-      final product = await productRepository.getFullProductById(productId);
+      final product = await productRepository.getProductDetailById(productId);
       return product;
     });

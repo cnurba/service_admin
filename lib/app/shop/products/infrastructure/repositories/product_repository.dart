@@ -215,17 +215,18 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<FullProductModel> getFullProductById(String productId) async {
+  Future<FullProductModel> getProductDetailById(String productId) async {
     try {
       final response = await _dio.get(
-        Endpoints.myproducts.productsByProductId(productId),
+        Endpoints.products.products,
+        queryParameters: {'id': productId},
       );
 
       if (response.statusCode == 200) {
-        final dataList = response.data as List;
+        final dataList = response.data;
         if (dataList.isEmpty)
           throw Exception('No product found with id $productId');
-        return FullProductModel.fromJson(dataList.first);
+        return FullProductModel.fromJson(dataList);
       } else {
         throw Exception('Failed to load product: ${response.statusCode}');
       }

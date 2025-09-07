@@ -52,7 +52,7 @@ class MyProductsList extends ConsumerWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) => ProductDetailScreen(
-                          productId: product.id.toString(),
+                          productId: product.id,
                         ),
                       ),
                     );

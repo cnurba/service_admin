@@ -20,9 +20,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final productAsync = ref.watch(
-      productByProductIdFutureProvider(widget.productId),
+      productDetailFutureProvider(widget.productId),
     );
-
     return Scaffold(
       appBar: AppBar(title: const Text("Детали о продукте")),
       body: productAsync.when(
@@ -32,7 +31,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Carousel(),
+                ///Carousel(),
 
                 // Dynamic Size Text
                 Text(
