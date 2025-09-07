@@ -4,7 +4,7 @@ import 'package:service_admin/app/shop/products/application/application/new_prod
 import 'package:service_admin/injection.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
 
-final newProductProvider = StateNotifierProvider<NewProductController, NewProductState>((ref) {
-  return NewProductController(getIt<IProductRepository>());
-});
-
+final newProductProvider =
+    StateNotifierProvider<NewProductController, NewProductState>((ref) {
+      return NewProductController(getIt<IProductRepository>());
+    });

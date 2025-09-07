@@ -7,6 +7,7 @@ import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
 import 'package:service_admin/app/shop/price/presentation/widget/price_filter_widget.dart';
 import 'package:service_admin/app/shop/price/presentation/set_price_screen.dart';
 import 'package:service_admin/app/shop/price/presentation/widget/number_format.dart';
+import 'package:service_admin/app/shop/price/presentation/widget/price_page_screen.dart';
 import 'package:service_admin/core/extansions/router_extension.dart';
 
 class PriceListScreen extends ConsumerStatefulWidget {
@@ -17,8 +18,6 @@ class PriceListScreen extends ConsumerStatefulWidget {
 }
 
 class _PriceListScreenState extends ConsumerState<PriceListScreen> {
-  final NumberFormat numberFormat = NumberFormat.decimalPattern('en');
-
   @override
   void dispose() {
     super.dispose();
@@ -27,73 +26,8 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Prices")),
-      body: Consumer(
-        builder: (context, ref, child) {
-          final prices = ref.watch(priceProvider);
-          return ListView(
-            children: [
-              PriceFilterWidget(
-                onPriceTypeSelected: (priceTypeUuid) {
-                  ref.read(setPriceProvider.notifier).setPriceTypeUuid(priceTypeUuid);
-                  ref.read(priceProvider.notifier).loadPrices(priceTypeUuid);
-                },
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: prices.length,
-                itemBuilder: (context, index) {
-                  final item = prices[index];
-                  return ListTile(
-                    selected: ref
-                        .watch(setPriceProvider)
-                        .items
-                        .any((e) => e.priceModel == item),
-
-                    title: Text(prices[index].productName),
-
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("UnitName: ${prices[index].unitName}"),
-                        Text(
-                          "Stock: ${numberFormat.format(prices[index].stock)}",
-                        ),
-                        Text(
-                          "Old Price: ${numberFormat.format(prices[index].oldPrice)}",
-                        ),
-                      ],
-                    ),
-
-                    trailing: SizedBox(
-                      width: 100,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [NumberFormatter()],
-                        textAlign: TextAlign.right,
-                        decoration: const InputDecoration(
-                          labelText: 'Новая цена',
-                          isDense: true,
-                        ),
-                        onChanged: (value) {
-                          final price = double.tryParse(value);
-                          if (price != null) {
-                            ref
-                                .read(setPriceProvider.notifier)
-                                .setPriceItems(
-                                  SetPriceModel(priceModel: item, price: price),
-                                );
-                          }
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        },
-      ),
+      appBar: AppBar(title: const Text("Цены")),
+      body: PricePageScreen(),
       floatingActionButton: Builder(
         builder: (context) {
           final _newPrices = ref.watch(setPriceProvider);
@@ -106,7 +40,7 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
               textAlign: TextAlign.center,
             ),
             icon: const Icon(Icons.check),
-            backgroundColor: Colors.yellow[700],
+            backgroundColor: Colors.blue[700],
           );
         },
       ),

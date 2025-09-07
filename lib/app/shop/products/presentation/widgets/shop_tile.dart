@@ -6,11 +6,9 @@ class ShopTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:8),
+      padding: const EdgeInsets.only(top: 8),
       child: ListTile(
-
         title: const Text('Категории'),
-
         leading: const Icon(Icons.shopping_cart),
         onTap: () {
           // Navigator.of(context).push(
@@ -19,6 +17,5 @@ class ShopTile extends StatelessWidget {
         },
       ),
     );
-
   }
 }

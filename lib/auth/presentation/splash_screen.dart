@@ -13,7 +13,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -21,11 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background color or image
-          Container(
-            color: Colors.blue,
-          ),
-          // Animated logo
+          Container(color: Colors.blue),
           Center(
             child: AnimatedOpacity(
               duration: const Duration(seconds: 2),
@@ -33,11 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Replace with your app logo
-                  const Icon(Icons.payment, size: 100, color: Colors.white),
+                  const Icon(
+                    Icons.construction_sharp,
+                    size: 100,
+                    color: Colors.white,
+                  ),
                   const SizedBox(height: 16),
                   const Text(
-                    'PayMe',
+                    'Construction',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,

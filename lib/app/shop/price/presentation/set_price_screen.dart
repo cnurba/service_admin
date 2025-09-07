@@ -15,7 +15,7 @@ class SetPriceScreen extends ConsumerWidget {
     final SetPriceState state = ref.watch(setPriceProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Set Prices"),
+        title: const Text("Устанавить цены"),
         leading: BackButton(
           onPressed: () {
             ref.read(setPriceProvider.notifier).clear();
@@ -35,7 +35,6 @@ class SetPriceScreen extends ConsumerWidget {
         ),
         icon: Icon(Icons.check),
         onPressed: () {
-          // Post prices and clear the list
           ref.read(setPriceProvider.notifier).postPrices();
         },
       ),

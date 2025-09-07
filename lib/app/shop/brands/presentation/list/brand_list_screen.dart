@@ -13,7 +13,11 @@ class BrandListScreen extends ConsumerWidget {
     final resultAsync = ref.watch(brandFutureProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Brands'),
+        centerTitle: true,
+        title: const Text(
+          'Производители',
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -52,9 +56,13 @@ class BrandListScreen extends ConsumerWidget {
             itemCount: brands.length,
             itemBuilder: (context, index) {
               final brand = brands[index];
-              return ListTile(
-                title: Text(brand.name),
-                subtitle: Text('ID: ${brand.id}'),
+              return Card(
+                elevation: 4,
+                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: ListTile(
+                  title: Text(brand.name, style: TextStyle()),
+                  subtitle: Text('Описание: ${brand.description}'),
+                ),
               );
             },
           );

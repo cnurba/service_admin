@@ -17,7 +17,6 @@ class NewProductPage extends ConsumerStatefulWidget {
 }
 
 class _NewProductScreenState extends ConsumerState<NewProductPage> {
-
   final _productFormKey = GlobalKey<FormState>();
   @override
   void dispose() {
@@ -34,7 +33,7 @@ class _NewProductScreenState extends ConsumerState<NewProductPage> {
             ref.read(newProductProvider.notifier).post();
           }
         },
-        label: const Text('Сохранить' ),
+        label: const Text('Сохранить'),
         icon: const Icon(Icons.save),
       ),
       body: Form(

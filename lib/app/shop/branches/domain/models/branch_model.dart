@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:service_admin/core/http/server_address.dart';
 
 class BranchModel extends Equatable {
   final String id;
@@ -18,6 +19,11 @@ class BranchModel extends Equatable {
     required this.address,
     required this.isOpen,
   });
+  String get imagePath {
+    return imageUrl.isNotEmpty
+        ? "${ServerAddress().imageUrl}$imageUrl"
+        : 'https://via.placeholder.com/150';
+  }
 
   @override
   List<Object?> get props => [

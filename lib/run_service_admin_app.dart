@@ -26,8 +26,8 @@ class _ServiceAdminAppState extends ConsumerState<ServiceAdminApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: AppTheme.lightTheme,
-      // darkTheme: AppTheme.darkTheme,
-      // themeMode: themeMode,
+      // // darkTheme: AppTheme.darkTheme,
+      // // themeMode: themeMode,
       home: Consumer(
         // Using Consumer to access the context and theme
         builder: (context, ref, child) {

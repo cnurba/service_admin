@@ -15,7 +15,7 @@ class StockListScreen extends ConsumerWidget {
     final stockState = ref.watch(setStockProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Stock')),
+      appBar: AppBar(title: const Text('Остатки')),
       body: resultAsync.when(
         data: (myProducts) {
           return ListView.builder(
@@ -86,7 +86,7 @@ class StockListScreen extends ConsumerWidget {
                 .items
                 .any((item) => item.price > 0 || item.unit > 0)
             ? const Color.fromARGB(255, 11, 149, 68)
-            : Colors.grey,
+            : Colors.blue,
       ),
     );
   }

@@ -16,9 +16,9 @@ final attributeFutureProvider = FutureProvider.autoDispose<List<Attribute>>((
   return attributes;
 });
 
-final attributeCreateProvider = FutureProvider.autoDispose.family<
-    bool, Map<String, dynamic>>((ref, data) async {
-  final repo = ref.watch(productRepositoryProvider);
-  final success = await repo.createAttribute(data);
-  return success;
-});
+final attributeCreateProvider = FutureProvider.autoDispose
+    .family<bool, Map<String, dynamic>>((ref, data) async {
+      final repo = ref.watch(productRepositoryProvider);
+      final success = await repo.createAttribute(data);
+      return success;
+    });

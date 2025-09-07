@@ -9,9 +9,10 @@ final myProductRepositoryProvider = Provider<IProductRepository>(
   (ref) => ProductRepository(getIt<Dio>()),
 );
 
-final myProductFutureProvider =
-    FutureProvider.autoDispose<List<ProductModel>>((ref) async {
-      final myProductRepository = ref.watch(myProductRepositoryProvider);
-      final result = await myProductRepository.getMyProducts();
-      return result;
-    });
+final myProductFutureProvider = FutureProvider.autoDispose<List<ProductModel>>((
+  ref,
+) async {
+  final myProductRepository = ref.watch(myProductRepositoryProvider);
+  final result = await myProductRepository.getMyProducts();
+  return result;
+});

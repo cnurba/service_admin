@@ -16,7 +16,7 @@ class MyProductsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final resultAsync = ref.watch(myProductFutureProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Мои Товары')),
+      appBar: AppBar(title: const Text('Мои товары')),
       floatingActionButton: ExpandableFab(
         distance: 60,
         children: [

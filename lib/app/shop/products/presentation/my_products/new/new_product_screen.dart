@@ -6,12 +6,9 @@ import 'package:service_admin/app/shop/products/application/application/new_prod
 import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_attribute_page.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_images_page.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/new/pages/new_product_page.dart';
-import 'package:service_admin/core/extansions/router_extension.dart';
-import 'package:service_admin/core/presentation/messenger/centered_snack.dart';
 
 class NewProductScreen extends ConsumerStatefulWidget {
   const NewProductScreen({super.key});
-
   @override
   ConsumerState<NewProductScreen> createState() => _NewProductScreenState();
 }
@@ -106,11 +103,12 @@ class _NewProductScreenState extends ConsumerState<NewProductScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Товар успешно создан')),
                       );
+
                       /// Обновить список моих товаров
                       ref.refresh(myProductFutureProvider);
+
                       /// Вернуться к списку моих товаров
                       Navigator.pop(context);
-
                     }
                   },
                 ),

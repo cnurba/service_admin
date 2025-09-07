@@ -35,4 +35,8 @@ class ProductModel extends Equatable {
     branchId,
     brandName,
   ];
+
+  get imageUrl => null;
+
+  get baseUrl => null;
 }
