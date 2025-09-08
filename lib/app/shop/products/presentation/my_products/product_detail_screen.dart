@@ -6,6 +6,7 @@ import 'package:service_admin/app/shop/products/presentation/my_products/widgets
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final String productId;
+
   const ProductDetailScreen({super.key, required this.productId});
 
   @override
@@ -75,7 +76,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     );
                   }),
                 ),
-
                 const SizedBox(height: 16),
                 Text(
                   product.name,
@@ -92,7 +92,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
-
                 ExpansionTile(
                   expandedCrossAxisAlignment: CrossAxisAlignment.start,
                   title: const Text(

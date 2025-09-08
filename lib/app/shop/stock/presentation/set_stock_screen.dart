@@ -23,8 +23,8 @@ class SetStockScreen extends ConsumerWidget {
         itemBuilder: (context, index) {
           final item = stockState.items[index];
           return ListTile(
-            title: Text(item.stockModel.productModel.name),
-            subtitle: Text("Qty: ${item.price}, Stock: ${item.unit}"),
+            title: Text("dfoginrtoignrt"),
+            subtitle: Text("Qty: ${item.price}, Stock: dsgfdf}"),
             // trailing: IconButton(
             //   icon: const Icon(Icons.delete, color: Colors.red),
             //  // onPressed: () => notifier.deleteStockItem(item),

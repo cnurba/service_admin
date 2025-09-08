@@ -5,6 +5,7 @@ import 'package:service_admin/core/enums/state_type.dart';
 class SetStockState extends Equatable {
   final List<SetStockModel> items;
   final StateType stateType;
+  final String type;
 
   const SetStockState({required this.items, required this.stateType});
 

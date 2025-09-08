@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:service_admin/app/shop/stock/application/set_stock_provider/set_stock_state.dart';
+import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
 import 'package:service_admin/app/shop/stock/domain/repositories/i_stock_repository.dart';
 
 class StockRepository implements IStockRepository {
@@ -16,5 +17,11 @@ class StockRepository implements IStockRepository {
       print("Error sending stocks: $e");
       return false;
     }
+  }
+
+  @override
+  Future<List<StockModel>> getStocks() async{
+    // TODO: implement getStocks
+    throw UnimplementedError();
   }
 }
