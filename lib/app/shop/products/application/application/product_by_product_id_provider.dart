@@ -16,7 +16,7 @@ import 'package:service_admin/app/shop/products/domain/models/full_product_model
 import 'package:service_admin/app/shop/products/application/application/product_future_provider.dart';
 
 final productDetailFutureProvider = FutureProvider.autoDispose
-    .family<FullProductModel, String>((ref, productId) async {
+    .family<ProductDetailModel, String>((ref, productId) async {
       final productRepository = ref.watch(productRepositoryProvider);
       final product = await productRepository.getProductDetailById(productId);
       return product;

@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
-import 'package:service_admin/app/shop/products/infrastructure/repositories/product_repository.dart';
 import 'package:service_admin/injection.dart';
 
 final productRepositoryProvider = Provider<IProductRepository>(
@@ -12,7 +10,7 @@ final productRepositoryProvider = Provider<IProductRepository>(
 final allProductsFutureProvider =
     FutureProvider.autoDispose<List<ProductModel>>((ref) async {
       final repo = ref.watch(productRepositoryProvider);
-      return repo.getAllProduct(ref);
+      return repo.getAllProduct();
     });
 // final productRepositoryProvider = Provider<IProductRepository>(
 //   (ref) => ProductRepository(getIt<Dio>()),
@@ -22,9 +20,9 @@ final productFutureProvider = FutureProvider.autoDispose<List<ProductModel>>((
   ref,
 ) async {
   final productRepository = ref.watch(productRepositoryProvider);
-  final result = await productRepository.getAllProduct(ref);
+  final result = await productRepository.getAllProduct();
   return result;
 });
-final productRepositoryProviders = Provider<FakeProductRepository>(
-  (ref) => FakeProductRepository(),
-);
+// final productRepositoryProviders = Provider<FakeProductRepository>(
+//   (ref) => FakeProductRepository(),
+// );

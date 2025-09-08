@@ -7,7 +7,7 @@ import 'package:service_admin/app/shop/products/domain/models/product_model.dart
 
 abstract class IProductRepository {
   /// Get all products.
-  Future<List<ProductModel>> getAllProduct(productId);
+  Future<List<ProductModel>> getAllProduct();
 
   Future<List<ProductModel>> getMyProducts();
 
@@ -36,5 +36,5 @@ abstract class IProductRepository {
   Future<List<ProductAttribute>> getProductAttributes(String productId);
 
   ///Get product attribute
-  Future<FullProductModel> getProductDetailById(String productId);
+  Future<ProductDetailModel> getProductDetailById(String productId);
 }

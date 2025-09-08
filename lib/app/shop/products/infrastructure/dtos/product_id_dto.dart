@@ -92,7 +92,6 @@
 //
 
 import 'package:equatable/equatable.dart';
-import 'package:service_admin/app/shop/products/domain/models/full_product_model.dart';
 import 'package:service_admin/app/shop/products/domain/models/product_detail.dart';
 
 class ProductIdDto extends Equatable {
@@ -170,7 +169,6 @@ class ProductIdDto extends Equatable {
     );
   }
 
-  /// 🔹 Convert DTO → Domain Model
   ProductIdModel toProductId() {
     return ProductIdModel(
       id: id,
@@ -185,6 +183,4 @@ class ProductIdDto extends Equatable {
 
   @override
   List<Object?> get props => [id];
-
-  // Future<FullProductModel> toProductDto() async {}
 }

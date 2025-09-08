@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:service_admin/core/http/server_address.dart';
 
-class FullProductModel extends Equatable {
+class ProductDetailModel extends Equatable {
   final String id;
   final String name;
   final String description;
@@ -16,7 +16,7 @@ class FullProductModel extends Equatable {
   final List<String> imageUrls;
   final List<ProductAttributeModel> attributes;
 
-  const FullProductModel({
+  const ProductDetailModel({
     required this.id,
     required this.name,
     required this.description,
@@ -31,6 +31,7 @@ class FullProductModel extends Equatable {
     required this.imageUrls,
     required this.attributes,
   });
+
   String get imagePath {
     return imageUrls.isNotEmpty
         ? "${ServerAddress().imageUrl}$imageUrls"
@@ -38,8 +39,8 @@ class FullProductModel extends Equatable {
   }
 
   /// ✅ From API JSON
-  factory FullProductModel.fromJson(Map<String, dynamic> json) {
-    return FullProductModel(
+  factory ProductDetailModel.fromJson(Map<String, dynamic> json) {
+    return ProductDetailModel(
       id: json['uuid'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',

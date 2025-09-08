@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:service_admin/app/shop/data/fake_product_api.dart';
 import 'package:service_admin/app/shop/products/domain/models/attribute/attribute.dart';
 import 'package:service_admin/app/shop/products/domain/models/attribute/product_attribute.dart';
 import 'package:service_admin/app/shop/products/domain/models/full_product_model.dart';
@@ -10,7 +9,6 @@ import 'package:service_admin/app/shop/products/domain/models/new/new_product_mo
 import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
 import 'package:service_admin/app/shop/products/infrastructure/dtos/product_dto.dart';
-import 'package:service_admin/app/shop/products/infrastructure/dtos/product_id_dto.dart';
 import 'package:service_admin/core/http/endpoints.dart';
 
 class ProductRepository implements IProductRepository {
@@ -50,7 +48,7 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<List<ProductModel>> getAllProduct(ArgumentError) async {
+  Future<List<ProductModel>> getAllProduct() async {
     try {
       final responseData = await _dio.get(Endpoints.products.products);
       if (responseData.statusCode == 200) {
@@ -215,7 +213,7 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<FullProductModel> getProductDetailById(String productId) async {
+  Future<ProductDetailModel> getProductDetailById(String productId) async {
     try {
       final response = await _dio.get(
         Endpoints.products.products,
@@ -224,53 +222,15 @@ class ProductRepository implements IProductRepository {
 
       if (response.statusCode == 200) {
         final dataList = response.data;
-        if (dataList.isEmpty)
+        if (dataList.isEmpty) {
           throw Exception('No product found with id $productId');
-        return FullProductModel.fromJson(dataList);
+        }
+        return ProductDetailModel.fromJson(dataList);
       } else {
         throw Exception('Failed to load product: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Error fetching product by id: $e');
     }
-  }
-}
-
-@override
-Future<FullProductModel> getFullProductById(String productId) {
-  // TODO: implement getFullProductById
-  throw UnimplementedError();
-}
-
-// @override
-// Future<FullProductModel> getFullProductById(String productId) async {
-//   try {
-//     final responseData = await _dio.get(
-//       Endpoints.productAttributes.productsByProductAttributesId(productId),
-//     );
-
-//     if (responseData.statusCode == 200) {
-//       final dataList = responseData.data as List; // API returns a list
-//       if (dataList.isEmpty) {
-//         throw Exception('No product found with id $productId');
-//       }
-//       return ProductIdDto.fromJson(dataList.first).toProductId(); // pick first
-//     } else {
-//       throw Exception('Failed to load product with id: $productId');
-//     }
-//   } catch (e) {
-//     throw Exception('Error fetching product by id: $e');
-//   }
-// }
-
-class FakeProductRepository {
-  final FakeProductApi _api = FakeProductApi();
-
-  Future<Map<String, dynamic>> fetchProduct(String id) {
-    return _api.getProductById(id);
-  }
-
-  Future<List<Map<String, dynamic>>> fetchAllProducts() {
-    return _api.getAllProducts();
   }
 }

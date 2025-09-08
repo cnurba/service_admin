@@ -25,15 +25,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("Детали о продукте")),
       body: productAsync.when(
-        data: (FullProductModel product) {
+        data: (ProductDetailModel product) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ///Carousel(),
-
-                // Dynamic Size Text
+                CarouselSlider(images: product.imageUrls, sliderHeight: 150),
+                SizedBox(height: 12),
                 Text(
                   "Размер: ${sizes[selectedIndex]}",
                   style: const TextStyle(
@@ -42,8 +41,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
-                // Size Selector
                 Row(
                   children: List.generate(sizes.length, (index) {
                     final isSelected = selectedIndex == index;
@@ -97,6 +94,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 const SizedBox(height: 10),
 
                 ExpansionTile(
+                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
                   title: const Text(
                     "Детали о товаре:",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
