@@ -8,7 +8,7 @@ class StockRepository implements IStockRepository {
   StockRepository(this._dio);
 
   @override
-  Future<bool> setStocks(SetStockState state) async {
+  Future<bool> setStocks(SetStockState state, String type) async {
     try {
       final data = state.items.map((e) => e.toJson()).toList();
       await _dio.post('/stock/set', data: data);
@@ -20,8 +20,7 @@ class StockRepository implements IStockRepository {
   }
 
   @override
-  Future<List<StockModel>> getStocks() async{
-    // TODO: implement getStocks
+  Future<List<IncomeModel>> getStocks(String type) async {
     throw UnimplementedError();
   }
 }

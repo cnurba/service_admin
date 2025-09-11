@@ -7,19 +7,28 @@ class SetStockState extends Equatable {
   final StateType stateType;
   final String type;
 
-  const SetStockState({required this.items, required this.stateType});
+  const SetStockState({
+    required this.items,
+    required this.stateType,
+    this.type = 'set',
+  });
 
   factory SetStockState.initial() {
     return SetStockState(items: [], stateType: StateType.initial);
   }
 
-  SetStockState copyWith({List<SetStockModel>? items, StateType? stateType}) {
+  SetStockState copyWith({
+    List<SetStockModel>? items,
+    StateType? stateType,
+    String? type,
+  }) {
     return SetStockState(
       items: items ?? this.items,
       stateType: stateType ?? this.stateType,
+      type: type ?? this.type,
     );
   }
 
   @override
-  List<Object?> get props => [items, stateType];
+  List<Object?> get props => [items, stateType, type];
 }

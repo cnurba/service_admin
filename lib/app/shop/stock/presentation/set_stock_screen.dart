@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/stock/application/set_stock_provider/set_stock_controller.dart';
+import 'package:service_admin/app/shop/stock/application/set_stock_provider/set_stock_provider.dart';
 import 'package:service_admin/core/extansions/router_extension.dart';
 
 class SetStockScreen extends ConsumerWidget {
@@ -36,7 +36,7 @@ class SetStockScreen extends ConsumerWidget {
         icon: const Icon(Icons.upload),
         label: const Text('Отправить на сервер'),
         onPressed: () async {
-         // await notifier.postStocks();
+          // await notifier.postStocks();
           context.pop();
         },
       ),

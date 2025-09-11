@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class StockModel extends Equatable {
+class IncomeModel extends Equatable {
   final String productName;
   final String productUuid;
   final String productPropertyName;
@@ -8,7 +8,7 @@ class StockModel extends Equatable {
   final String unitName;
   final double stock;
 
-  const StockModel({
+  const IncomeModel({
     required this.productName,
     required this.productUuid,
     required this.productPropertyName,
@@ -17,8 +17,8 @@ class StockModel extends Equatable {
     required this.stock,
   });
 
-  factory StockModel.fromJson(Map<String, dynamic> json) {
-    return StockModel(
+  factory IncomeModel.fromJson(Map<String, dynamic> json) {
+    return IncomeModel(
       productName: json['productName'],
       productUuid: json['productUuid'],
       productPropertyName: json['productPropertyName'],
@@ -37,6 +37,4 @@ class StockModel extends Equatable {
     unitName,
     stock,
   ];
-
-
 }

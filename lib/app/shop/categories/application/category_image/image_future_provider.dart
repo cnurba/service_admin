@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/core/services/image_picker/i_image_picker_repository.dart';
 import 'package:service_admin/core/services/image_picker/image_picker_repository.dart';
@@ -10,5 +8,5 @@ import 'package:service_admin/injection.dart';
 /// from the gallery or camera.
 /// It is a regular provider, meaning it will not be disposed of automatically.
 final imageRepositoryProvider = Provider<IImagePickerRepository>(
-      (ref) => ImagePickerRepository(getIt()),
+  (ref) => ImagePickerRepository(getIt()),
 );

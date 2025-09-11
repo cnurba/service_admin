@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:service_admin/app/shop/brands/domain/models/brand_model.dart';
-import 'package:service_admin/app/shop/brands/presentation/select/brand_selectable_screen.dart';
-import 'package:service_admin/app/shop/categories/domain/models/category_model.dart';
-import 'package:service_admin/app/shop/categories/presentation/select/category_selectable_screen.dart';
 import 'package:service_admin/app/shop/units/domain/unit_model.dart';
 import 'package:service_admin/app/shop/units/presentation/unit_selectable_screen.dart';
 
@@ -17,8 +13,7 @@ class UnitSelectTextField extends StatefulWidget {
   final Function(UnitModel) onSelected;
 
   @override
-  State<UnitSelectTextField> createState() =>
-      _StateUnitSelectTextField();
+  State<UnitSelectTextField> createState() => _StateUnitSelectTextField();
 }
 
 class _StateUnitSelectTextField extends State<UnitSelectTextField> {

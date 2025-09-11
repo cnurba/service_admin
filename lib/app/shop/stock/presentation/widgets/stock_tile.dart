@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/stock.model.dart';
+import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
 
 class StockTile extends StatelessWidget {
-  final StockModel stock;
+  final IncomeModel stock;
   final VoidCallback? onSelect;
-  const StockTile({super.key, required this.stock, this.onSelect});
+  final bool isSelected;
+
+  const StockTile({
+    super.key,
+    required this.stock,
+    this.onSelect,
+    this.isSelected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: isSelected ? Colors.blueGrey[100] : Colors.white,
       elevation: 4,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -22,7 +30,9 @@ class StockTile extends StatelessWidget {
                 children: [
                   Text(
                     stock.productName,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -34,11 +44,15 @@ class StockTile extends StatelessWidget {
                     children: [
                       Text(
                         'Остаток: ',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey[700]),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[700],
+                        ),
                       ),
                       Text(
                         '${stock.stock} ${stock.unitName}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
@@ -46,15 +60,11 @@ class StockTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            ElevatedButton(
-              onPressed: onSelect,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-              ),
-              child: const Text('Выбрать'),
+
+            IconButton(
+              onPressed: isSelected ? null : onSelect,
+              icon: const Icon(Icons.add_circle_rounded, color: Colors.blue),
+              iconSize: 40,
             ),
           ],
         ),

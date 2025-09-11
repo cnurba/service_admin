@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/price/application/price/price_controller.dart';
 import 'package:service_admin/app/shop/price/application/set_price_provider/set_price_controller.dart';
-import 'package:service_admin/app/shop/price/domain/model/set_price_model.dart';
-import 'package:service_admin/app/shop/price/presentation/widget/price_filter_widget.dart';
 import 'package:service_admin/app/shop/price/presentation/set_price_screen.dart';
-import 'package:service_admin/app/shop/price/presentation/widget/number_format.dart';
 import 'package:service_admin/app/shop/price/presentation/widget/price_page_screen.dart';
 import 'package:service_admin/core/extansions/router_extension.dart';
 

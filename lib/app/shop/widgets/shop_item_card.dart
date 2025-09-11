@@ -16,13 +16,9 @@ class ShopItemCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Image.network(
+              child: Image.asset(
                 item.imageUrl,
                 fit: BoxFit.cover,
-                loadingBuilder: (context, child, progress) {
-                  if (progress == null) return child;
-                  return const Center(child: CircularProgressIndicator());
-                },
                 errorBuilder: (context, error, stackTrace) => Container(
                   color: Colors.grey,
                   child: const Icon(
@@ -33,6 +29,7 @@ class ShopItemCard extends StatelessWidget {
                 ),
               ),
             ),
+
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(

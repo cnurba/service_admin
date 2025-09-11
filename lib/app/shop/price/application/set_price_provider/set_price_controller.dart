@@ -24,7 +24,9 @@ class SetPriceController extends StateNotifier<SetPriceState> {
   }
 
   void deletePriceItem(SetPriceModel setPriceModel) {
-    final updatedList = state.items.where((item) => item != setPriceModel).toList();
+    final updatedList = state.items
+        .where((item) => item != setPriceModel)
+        .toList();
     state = state.copyWith(items: updatedList);
   }
 
@@ -32,8 +34,7 @@ class SetPriceController extends StateNotifier<SetPriceState> {
     /// add item to list
     /// if item already exists, update it
     final index = state.items.indexWhere(
-      (item) =>
-          item.priceModel == setPriceModel.priceModel,
+      (item) => item.priceModel == setPriceModel.priceModel,
     );
     if (index == -1) {
       state = state.copyWith(items: [...state.items, setPriceModel]);

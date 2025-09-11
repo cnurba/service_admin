@@ -1,5 +1,4 @@
 import 'package:service_admin/app/shop/categories/domain/models/category_model.dart';
-import 'package:service_admin/app/shop/products/domain/models/product_model.dart';
 
 abstract class ICategoryRepository {
   /// Get all categories.
@@ -16,5 +15,4 @@ abstract class ICategoryRepository {
 
   /// Delete a category by id.
   Future<void> deleteCategory(String id);
-
 }

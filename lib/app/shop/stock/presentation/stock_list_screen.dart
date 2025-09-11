@@ -1,69 +1,93 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
-import 'package:service_admin/app/shop/stock/application/set_stock_provider/set_stock_controller.dart';
-import 'package:service_admin/app/shop/stock/presentation/set_stock_screen.dart';
+import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
+import 'package:service_admin/app/shop/stock/presentation/widgets/bottom_sheet.dart';
 import 'package:service_admin/app/shop/stock/presentation/widgets/stock_tile.dart';
-import 'package:service_admin/core/extansions/router_extension.dart';
 
-import '../domain/models/stock.model.dart';
-
-class StockListScreen extends ConsumerWidget {
+class StockListScreen extends ConsumerStatefulWidget {
   const StockListScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ///final resultAsync = ref.watch(myProductFutureProvider);
-    ///final resultAsync = ref.watch(setStockProvider).items;
+  ConsumerState<StockListScreen> createState() => _StockListScreenState();
+}
+
+class _StockListScreenState extends ConsumerState<StockListScreen> {
+  final List<IncomeModel> selectedItems = [];
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Остатки')),
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          // final product = resultAsync[index].stockModel;
-          // final isSelected = resultAsync.any(
-          //   (item) => item.stockModel.productModel.id == product.id,
-          // );
+          final item = IncomeModel(
+            productName: "Product $index",
+            productPropertyName: "Property $index",
+            productPropertyUuid: "uuid-$index",
+            productUuid: "prod-uuid-$index",
+            stock: 255,
+            unitName: "шт",
+          );
+
+          final isSelected = selectedItems.any(
+            (selected) => selected.productUuid == item.productUuid,
+          );
 
           return StockTile(
+            stock: item,
+            isSelected: isSelected,
             onSelect: () {
-
+              if (!isSelected) {
+                setState(() {
+                  selectedItems.add(item);
+                });
+              }
             },
-            stock: StockModel(
-              productName: "Product $index",
-              productPropertyName: "Property $index",
-              productPropertyUuid: "uuid-$index",
-              productUuid: "prod-uuid-$index",
-              stock: 255,
-              unitName: "шт",
-            ),
           );
         },
       ),
+      floatingActionButton: selectedItems.isNotEmpty
+          ? FloatingActionButton.extended(
+              onPressed: () => _showSelectedItems(context),
+              label: Row(
+                children: [
+                  const Icon(Icons.shopping_basket),
+                  const SizedBox(width: 8),
+                  Text("${selectedItems.length} выбрано"),
+                ],
+              ),
+              backgroundColor: Colors.lightBlue,
+            )
+          : null,
+    );
+  }
 
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //
-      //   },
-      //   // label: Builder(
-      //   //   builder: (context) {
-      //   //
-      //   //
-      //   //     return Text(
-      //   //       "Выбрано количество $selectedCount, Цена: $totalPrice, \nУстановить",
-      //   //       textAlign: TextAlign.center,
-      //   //     );
-      //   //   },
-      //   // ),
-      //   icon: const Icon(Icons.check),
-      //   backgroundColor:
-      //       ref
-      //           .watch(setStockProvider)
-      //           .items
-      //           .any((item) => item.price > 0 || item.unit > 0)
-      //       ? const Color.fromARGB(255, 11, 149, 68)
-      //       : Colors.blue,
-      // ),
+  void _showSelectedItems(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return SelectedItemsBottomSheet(
+              selectedItems: selectedItems,
+              onDelete: (index) {
+                setState(() {
+                  selectedItems.removeAt(index);
+                });
+                setModalState(() {});
+              },
+              onConfirm: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Оформлено')));
+              },
+            );
+          },
+        );
+      },
     );
   }
 }
