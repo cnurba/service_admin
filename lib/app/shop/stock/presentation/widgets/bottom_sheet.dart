@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
+import 'package:service_admin/app/shop/stock/domain/models/income_model.dart';
 import 'package:service_admin/core/presentation/slidable/app_slidable.dart';
 
 class SelectedItemsBottomSheet extends StatelessWidget {

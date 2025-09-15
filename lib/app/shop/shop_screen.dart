@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:service_admin/app/shop/data/shop_items_data.dart';
-import 'package:service_admin/app/shop/widgets/search_delagate.dart';
-import 'package:service_admin/app/shop/widgets/shop_item_card.dart';
+import 'package:service_admin/app/shop/branches/presentation/list/branch_list_screen.dart';
+import 'package:service_admin/app/shop/brands/presentation/list/brand_list_screen.dart';
+import 'package:service_admin/app/shop/categories/presentation/list/category_list_screen.dart';
+import 'package:service_admin/app/shop/price/presentation/price_list_screen.dart';
+import 'package:service_admin/app/shop/products/presentation/my_products/my_products_list.dart';
+import 'package:service_admin/app/shop/shop_menu_button.dart';
+import 'package:service_admin/app/shop/shop_report_button.dart';
+import 'package:service_admin/app/shop/stock/presentation/income_list_screen.dart';
+import 'package:service_admin/core/extansions/router_extension.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final firstSection = ShopItems.take(4).toList();
-    final secondSection = ShopItems.skip(4).toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Магазин',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-        ),
+        title: const Text('Учет'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: GenericSearchDelegate(
-                  items: ShopItems,
-                  getLabel: (item) => item.title,
-                  buildResultItem: (item) => ListTile(title: Text(item.title)),
-                ),
-              );
-            },
-          ),
-          const SizedBox(width: 12),
           IconButton(
             icon: const Icon(Icons.circle_notifications),
             onPressed: () {},
@@ -38,48 +24,152 @@ class ShopScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.only(left: 16, bottom: 16, top: 16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Справочники',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 14),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 1,
+              SizedBox(
+                height: 100,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(CategoryListScreen());
+                      },
+                      title: 'Категории',
+                      icon: Icons.category_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(MyProductsList());
+                      },
+                      title: 'Товары',
+                      icon: Icons.shopping_bag_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(BrandListScreen());
+                      },
+                      title: 'Производители',
+                      icon: Icons.factory_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(BranchListScreen());
+                      },
+                      title: 'Магазины',
+                      icon: Icons.store_outlined,
+                    ),
+                  ],
                 ),
-                itemCount: firstSection.length,
-                itemBuilder: (context, index) {
-                  return ShopItemCard(item: firstSection[index]);
-                },
               ),
               const SizedBox(height: 14),
-              const Text(
-                'Цены и остатки',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-              ),
+              Text('Документы', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 14),
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 1,
+              SizedBox(
+                height: 100,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(PriceListScreen());
+                      },
+                      title: 'Установка цены',
+                      icon: Icons.monetization_on,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(IncomeListScreen(type: "Приход"));
+                      },
+                      title: 'Поступление товаров',
+                      icon: Icons.inventory_2_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(IncomeListScreen(type: "Продажа"));
+                      },
+                      title: 'Продажа товаров',
+                      icon: Icons.point_of_sale_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(IncomeListScreen(type: "Списание"));
+                      },
+                      title: 'Списание товаров',
+                      icon: Icons.remove_shopping_cart_outlined,
+                    ),
+
+                    ShopMenuButton(
+                      onTap: () {
+                        context.push(IncomeListScreen(type: "Остаток"));
+                      },
+                      title: 'Ввод остатков',
+                      icon: Icons.store_outlined,
+                    ),
+                  ],
                 ),
-                itemCount: secondSection.length,
-                itemBuilder: (context, index) =>
-                    ShopItemCard(item: secondSection[index]),
               ),
+              const SizedBox(height: 14),
+              Text('Отчеты', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 14),
+              SizedBox(
+                height: 100,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    /// Create circle bttons with icons and text below
+                    /// with diagrams
+                    ShopReportButton(
+                      icon: Icons.bar_chart,
+                      title: "Продажи",
+                      onPressed: () {},
+                    ),
+                    ShopReportButton(
+                      icon: Icons.receipt_long,
+                      title: "Заказы",
+                      onPressed: () {},
+                    ),
+                    ShopReportButton(
+                      icon: Icons.inventory,
+                      title: "Остатки",
+                      onPressed: () {},
+                    ),
+                    ShopReportButton(
+                      icon: Icons.price_change,
+                      title: "Прайслист",
+                      onPressed: () {},
+                    ),
+                    ShopReportButton(
+                      icon: Icons.people_alt,
+                      title: "Клиенты",
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text('Новый заказ', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 14),
             ],
           ),
         ),

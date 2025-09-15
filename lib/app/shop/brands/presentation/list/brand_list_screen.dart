@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/brands/application/brand_future_provider.dart';
 import 'package:service_admin/app/shop/brands/application/brand_image/brand_future_provider.dart';
 import 'package:service_admin/app/shop/brands/presentation/new/brand_new_screen.dart';
+import 'package:service_admin/core/presentation/image/app_image_container.dart';
 
 class BrandListScreen extends ConsumerWidget {
   const BrandListScreen({super.key});
@@ -13,11 +14,7 @@ class BrandListScreen extends ConsumerWidget {
     final resultAsync = ref.watch(brandFutureProvider);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Производители',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-        ),
+        title: const Text('Производители'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -53,15 +50,20 @@ class BrandListScreen extends ConsumerWidget {
       body: resultAsync.when(
         data: (brands) {
           return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            physics: BouncingScrollPhysics(),
             itemCount: brands.length,
             itemBuilder: (context, index) {
               final brand = brands[index];
               return Card(
-                elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ListTile(
-                  title: Text(brand.name, style: TextStyle()),
-                  subtitle: Text('Описание: ${brand.description}'),
+                  leading: AppImageContainer(
+                    image: brand.logoUrl,
+                    width: 64,
+                    height: 64,
+                  ),
+                  title: Text(brand.name),
+                  subtitle: Text(brand.description),
                 ),
               );
             },

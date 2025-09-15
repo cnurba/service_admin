@@ -35,7 +35,6 @@ class _PriceListScreenState extends ConsumerState<PriceListScreen> {
               textAlign: TextAlign.center,
             ),
             icon: const Icon(Icons.check),
-            backgroundColor: Colors.blue[700],
           );
         },
       ),

@@ -15,7 +15,7 @@ class SetPriceScreen extends ConsumerWidget {
     final SetPriceState state = ref.watch(setPriceProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Устанавить цены"),
+        title: const Text("Новые цены"),
         leading: BackButton(
           onPressed: () {
             ref.read(setPriceProvider.notifier).clear();
@@ -30,8 +30,8 @@ class SetPriceScreen extends ConsumerWidget {
             context.pop();
           },
           stateType: state.stateType,
-          errorChild: Icon(Icons.error, color: Colors.red),
-          child: Text('Установить цены'),
+          errorChild: Text("Назад"),
+          child: Text('Сохранить'),
         ),
         icon: Icon(Icons.check),
         onPressed: () {
@@ -39,13 +39,15 @@ class SetPriceScreen extends ConsumerWidget {
         },
       ),
       body: ListView.separated(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+
+        shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(),
         itemCount: state.items.length,
         itemBuilder: (context, index) {
           final priceItem = state.items[index];
           return SetPriceTile(
-            priceModel: priceItem.priceModel,
+            setPriceModel: priceItem,
             onDelete: () {
               ref.read(setPriceProvider.notifier).deletePriceItem(priceItem);
             },

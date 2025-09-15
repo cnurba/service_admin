@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/shop/products/application/application/my_product_future_provider.dart';
@@ -7,11 +6,11 @@ import 'package:service_admin/app/shop/products/presentation/my_products/new/new
 import 'package:service_admin/app/shop/products/presentation/my_products/product_detail_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/widgets/product_tile.dart';
 import 'package:service_admin/core/extansions/router_extension.dart';
-import 'package:service_admin/core/presentation/slidable/app_slidable.dart';
 import 'package:service_admin/core/presentation/slidable/expandable_fab.dart';
 
 class MyProductsList extends ConsumerWidget {
   const MyProductsList({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final resultAsync = ref.watch(myProductFutureProvider);
@@ -36,28 +35,23 @@ class MyProductsList extends ConsumerWidget {
       ),
       body: resultAsync.when(
         data: (myProducts) {
-          return ListView.builder(
+          return GridView.builder(
+            padding: const EdgeInsets.all(8),
+            physics: BouncingScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 4,
+              childAspectRatio: 0.75,
+            ),
             itemCount: myProducts.length,
             itemBuilder: (context, index) {
               final product = myProducts[index];
-              return AppSlidable(
-                id: product.id.toString(),
-                onDelete: (ctx) {
-                  log('Deleting product: ${product.name}');
+              return ProductTile(
+                product: product,
+                onTap: () {
+                  context.push(ProductDetailScreen(productId: product.id));
                 },
-                child: ProductTile(
-                  product: product,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ProductDetailScreen(
-                          productId: product.id,
-                        ),
-                      ),
-                    );
-                  },
-                ),
               );
             },
           );

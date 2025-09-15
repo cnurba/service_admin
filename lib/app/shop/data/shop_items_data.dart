@@ -4,7 +4,8 @@ import 'package:service_admin/app/shop/categories/presentation/list/category_lis
 import 'package:service_admin/app/shop/price/presentation/price_list_screen.dart';
 import 'package:service_admin/app/shop/products/presentation/my_products/my_products_list.dart';
 import 'package:service_admin/app/shop/shop_item.dart';
-import 'package:service_admin/app/shop/stock/presentation/stock_list_screen.dart';
+import 'package:service_admin/app/shop/stock/presentation/income_list_screen.dart';
+
 
 final List<ShopItem> ShopItems = [
   ShopItem(
@@ -32,9 +33,5 @@ final List<ShopItem> ShopItems = [
     imageUrl: 'assets/img/img-price.jpeg',
     screen: const PriceListScreen(),
   ),
-  ShopItem(
-    title: 'Остатки',
-    imageUrl: 'assets/img/img-stock.jpeg',
-    screen: const StockListScreen(),
-  ),
+
 ];

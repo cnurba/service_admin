@@ -20,7 +20,8 @@ class ProductRepository implements IProductRepository {
   Future<ProductModel> getProductById(String id) async {
     try {
       final responseData = await _dio.get(
-        Endpoints.myproducts.productsByProductId(id),
+        Endpoints.products.myProducts,
+        queryParameters: {'id': id},
       );
 
       if (responseData.statusCode == 200) {
@@ -74,10 +75,10 @@ class ProductRepository implements IProductRepository {
   @override
   Future<List<ProductModel>> getMyProducts() async {
     try {
-      final responseData = await _dio.get(Endpoints.myproducts.myproducts);
+      final responseData = await _dio.get(Endpoints.products.myProducts);
       if (responseData.statusCode == 200) {
         final myProductsList = (responseData.data as List)
-            .map((myProducts) => ProductDto.fromJson(myProducts).toProduct())
+            .map((myProducts) => ProductModel.fromJson(myProducts))
             .toList();
         log("FINISH Products length  ${myProductsList.length}");
         return myProductsList;

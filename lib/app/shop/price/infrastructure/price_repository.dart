@@ -5,6 +5,7 @@ import 'package:service_admin/app/shop/price/application/set_price_provider/set_
 import 'package:service_admin/app/shop/price/domain/model/price_model.dart';
 import 'package:service_admin/app/shop/price/domain/model/price_type_model.dart';
 import 'package:service_admin/app/shop/price/domain/repositories/i_price_repository.dart';
+import 'package:service_admin/core/http/endpoints.dart';
 
 class PriceRepository implements IPriceRepository {
   final Dio _dio;
@@ -33,7 +34,7 @@ class PriceRepository implements IPriceRepository {
   Future<List<PriceModel>> getPricesByType(String priceTypeUuid) async {
     try {
       final response = await _dio.get(
-        "/prices",
+        Endpoints.price.prices,
         queryParameters: {"priceTypeUuid": priceTypeUuid},
       );
       return (response.data as List)
@@ -48,7 +49,10 @@ class PriceRepository implements IPriceRepository {
   @override
   Future<bool> setPrices(SetPriceState state) async {
     try {
-      final response = await _dio.post("/prices", data: state.toJson());
+      final response = await _dio.post(
+        Endpoints.price.prices,
+        data: state.toJson(),
+      );
       return response.statusCode == 200;
     } catch (e) {
       log(e.toString());

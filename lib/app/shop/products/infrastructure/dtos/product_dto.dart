@@ -85,6 +85,7 @@ class ProductDto extends Equatable {
       brandName: brandName,
       branchId: branchId,
       branchName: branchName,
+      imageUrl: imageUrls.isNotEmpty ? imageUrls[0] : '',
     );
   }
 

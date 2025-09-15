@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:service_admin/app/shop/stock/domain/models/stock.model.dart';
+import 'package:service_admin/app/shop/stock/domain/models/income_model.dart';
+import 'package:service_admin/core/presentation/image/app_image_container.dart';
 
 class StockTile extends StatelessWidget {
   final IncomeModel stock;
@@ -15,60 +16,59 @@ class StockTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: isSelected ? Colors.blueGrey[100] : Colors.white,
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    stock.productName,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    stock.productPropertyName,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
+    return Stack(
+      children: [
+        Card(
+          color: isSelected ? Colors.blueGrey[100] : Colors.white,
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppImageContainer(
+                image: stock.imageUrl,
+                borderRadius: 8,
+                width: double.infinity,
+                height: 120,
+              ),
+              const SizedBox(width: 12),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Остаток: ',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[700],
-                        ),
+                        stock.productName,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(height: 4),
                       Text(
-                        '${stock.stock} ${stock.unitName}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                        stock.productPropertyName,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      const SizedBox(height: 8),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(width: 12),
-
-            IconButton(
-              onPressed: isSelected ? null : onSelect,
-              icon: const Icon(Icons.add_circle_rounded, color: Colors.blue),
-              iconSize: 40,
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: IconButton(
+            onPressed: onSelect,
+            icon: Icon(Icons.add, color: Colors.green),
+          ),
+        ),
+      ],
     );
   }
 }

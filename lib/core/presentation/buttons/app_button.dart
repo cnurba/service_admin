@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AppButton extends StatelessWidget {
   const AppButton({super.key, this.onPressed, required this.title});
 
@@ -10,11 +11,16 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.purple, // Set your desired color
+        // Set your desired color
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0), // Set your desired border radius
+          borderRadius: BorderRadius.circular(
+            8.0,
+          ), // Set your desired border radius
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Set padding
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 12.0,
+        ), // Set padding
       ),
       child: Text(
         title, // Button text

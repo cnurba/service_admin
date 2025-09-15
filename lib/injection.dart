@@ -9,8 +9,8 @@ import 'package:service_admin/app/shop/price/domain/repositories/i_price_reposit
 import 'package:service_admin/app/shop/price/infrastructure/price_repository.dart';
 import 'package:service_admin/app/shop/products/domain/repositories/i_product_repository.dart';
 import 'package:service_admin/app/shop/products/infrastructure/repositories/product_repository.dart';
-import 'package:service_admin/app/shop/stock/domain/repositories/i_stock_repository.dart';
-import 'package:service_admin/app/shop/stock/infrastructure/stock_repository.dart';
+import 'package:service_admin/app/shop/stock/domain/repositories/i_income_repository.dart';
+import 'package:service_admin/app/shop/stock/infrastructure/income_repository.dart';
 import 'package:service_admin/auth/domain/repositories/i_token_storage.dart';
 import 'package:service_admin/auth/infrastucture/repositories/auth_repository.dart';
 import 'package:service_admin/auth/infrastucture/repositories/token_storage.dart';
@@ -49,5 +49,5 @@ void initDependencies() {
   );
 
   getIt.registerLazySingleton<IPriceRepository>(() => PriceRepository(getIt()));
-  getIt.registerLazySingleton<IStockRepository>(() => StockRepository(getIt()));
+  getIt.registerLazySingleton<IIncomeRepository>(() => IncomeRepository(getIt()));
 }

@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:service_admin/app/home/presentation/home_screen.dart';
 import 'package:service_admin/auth/presentation/login_screen.dart';
 import 'package:service_admin/auth/presentation/splash_screen.dart';
+import 'package:service_admin/core/presentation/theme/app_theme.dart';
 import 'auth/application/auth_provider.dart';
 
 class ServiceAdminApp extends ConsumerStatefulWidget {
   const ServiceAdminApp({super.key});
+
   @override
   ConsumerState<ServiceAdminApp> createState() => _ServiceAdminAppState();
 }
@@ -22,13 +24,10 @@ class _ServiceAdminAppState extends ConsumerState<ServiceAdminApp> {
 
   @override
   Widget build(BuildContext context) {
-    // final themeMode = ref.watch(themeNotifierProvider);
-    return MaterialApp(
+     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // theme: AppTheme.lightTheme,
-      // // darkTheme: AppTheme.darkTheme,
-      // // themeMode: themeMode,
-      home: Consumer(
+      theme: AppTheme.lightTheme,
+        home: Consumer(
         // Using Consumer to access the context and theme
         builder: (context, ref, child) {
           // Access the auth state from the provider

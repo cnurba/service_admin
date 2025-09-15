@@ -11,23 +11,16 @@ class NavBar extends CupertinoTabBar {
     items: [
      const BottomNavigationBarItem(
         icon: Icon(Icons.home),
-        label: "Home",
+        label: "Учет",
       ),
       const BottomNavigationBarItem(
         icon: Icon(Icons.production_quantity_limits),
-        label: "Products",
+        label: "Заказы",
       ),
-      const BottomNavigationBarItem(
-        icon: Icon(Icons.favorite),
-        label: "Favorites",
-      ),
-      const BottomNavigationBarItem(
-        icon: Icon(Icons.card_giftcard),
-        label: "Cards",
-      ),
+
       const BottomNavigationBarItem(
         icon: Icon(Icons.settings),
-        label: "Settings",
+        label: "Профайл",
       ),
 
 

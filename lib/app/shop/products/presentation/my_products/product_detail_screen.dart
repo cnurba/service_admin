@@ -15,9 +15,6 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
-  int selectedIndex = 0; // Default first selected
-  final List<int> sizes = [70, 80, 90]; // Size list
-
   @override
   Widget build(BuildContext context) {
     final productAsync = ref.watch(
@@ -28,82 +25,41 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       body: productAsync.when(
         data: (ProductDetailModel product) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CarouselSlider(images: product.imageUrls, sliderHeight: 150),
+                CarouselSlider(
+                  images: product.imageUrls,
+                  sliderHeight: MediaQuery.of(context).size.width / 2,
+                ),
                 SizedBox(height: 12),
-                Text(
-                  "Размер: ${sizes[selectedIndex]}",
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: List.generate(sizes.length, (index) {
-                    final isSelected = selectedIndex == index;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isSelected ? Colors.blue : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(12),
-                          border: isSelected
-                              ? Border.all(color: Colors.black, width: 2)
-                              : null,
-                        ),
-                        child: Text(
-                          "${sizes[index]}",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : Colors.black,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
+
+                product.attributes.isNotEmpty
+                    ? Text(
+                        "Атрибуты: ${product.attributes.map((attr) => attr.name).join(', ')}",
+                      )
+                    : const Text("Нет атрибутов"),
+
                 const SizedBox(height: 16),
-                Text(
-                  product.name,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(product.name),
                 const SizedBox(height: 8),
                 Text(
                   product.description.isNotEmpty
                       ? product.description
                       : "Нет описания",
-                  style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
-                ExpansionTile(
-                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                  title: const Text(
-                    "Детали о товаре:",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  children: [
-                    Text(product.categoryName),
-                    Text(product.brandName),
-                    Text(product.branchName),
-                  ],
-                ),
+                Text("Категория: ${product.categoryName}"),
+                const SizedBox(height: 6),
+                Text("Бренд: ${product.brandName}"),
+                const SizedBox(height: 6),
+                Text("Филиал: ${product.branchName}"),
+                const SizedBox(height: 6),
+                Text("Активен: ${product.isActive ? "Да" : "Нет"}"),
+                const SizedBox(height: 6),
+                Text("Рекомендуемый: ${product.isFeatured ? "Да" : "Нет"}"),
+                const SizedBox(height: 20),
               ],
             ),
           );

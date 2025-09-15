@@ -13,11 +13,7 @@ class CategoryListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Категории',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Категории'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

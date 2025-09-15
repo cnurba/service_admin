@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:service_admin/core/http/server_address.dart';
+import 'package:service_admin/core/presentation/image/app_image_container.dart';
 
 /// Buyer photo slider widget.
 class CarouselSlider extends StatefulWidget {
@@ -59,15 +60,11 @@ class _CarouselSliderState extends State<CarouselSlider> {
               },
               itemBuilder: (context, index) {
                 final imageUrl = widget.images.elementAt(index);
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        "${ServerAddress().imageUrl}$imageUrl",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                return AppImageContainer(
+                  image: imageUrl,
+                  width: double.infinity,
+                  height: widget.sliderHeight,
+                  fit: BoxFit.cover,
                 );
               },
             ),

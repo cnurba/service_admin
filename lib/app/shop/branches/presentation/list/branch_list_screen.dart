@@ -7,12 +7,7 @@ class BranchListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Магазины и Филиалы',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-        ),
-      ),
+      appBar: AppBar(title: Text('Магазины')),
       body: BranchPageScreen(),
     );
   }

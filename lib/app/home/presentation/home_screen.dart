@@ -107,24 +107,14 @@ class _ServiceAdminAppScreenContentState
                 case 1:
                   return TabNavigatorHolder(
                     key: _tabHolders[1],
-                    child: const ProductsScreen(),
+                    child: const OrdersScreen(),
                   );
                 case 2:
                   return TabNavigatorHolder(
                     key: _tabHolders[2],
-                    child: const FavsScreen(),
-                  );
-                case 3:
-                  return TabNavigatorHolder(
-                    key: _tabHolders[3],
-                    child: const CardScreen(),
-                  );
-
-                case 4:
-                  return TabNavigatorHolder(
-                    key: _tabHolders[4],
                     child: const ProfileScreen(),
                   );
+
                 default:
                   return TabNavigatorHolder(
                     key: _tabHolders[2],
